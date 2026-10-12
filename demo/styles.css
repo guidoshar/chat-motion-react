@@ -164,3 +164,46 @@ footer { display: flex; align-items: center; justify-content: space-between; gap
 footer > div { display: flex; gap: 22px; font-size: 9px; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } button, .sidebar nav a { transition: none; } }
 @media (forced-colors: active) { .orb-card[aria-pressed="true"], .scenario-switch > button[aria-pressed="true"] { outline: 2px solid Highlight; } }
+
+.collections-section { margin-top: 16px; }
+.collection-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 22px; }
+.collection-play { display: flex; align-items: center; gap: 13px; }
+.collection-play > button:not(.primary-button) { font-size: 10px; }
+.collection-play > span { color: var(--muted); font-size: 8px; }
+.collection-states { display: flex; gap: 4px; }
+.collection-states button { font-size: 10px; border-color: transparent; }
+.collection-states button[aria-pressed="true"] { background: var(--selected); color: var(--accent); }
+.response-collections { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.collection-card { border: 1px solid var(--line); border-radius: 10px; min-width: 0; overflow: hidden; background: var(--paper); }
+.collection-card-heading { display: flex; align-items: center; gap: 11px; padding: 22px 20px; }
+.collection-index { color: var(--muted); font-size: 8px; align-self: flex-start; margin-top: 6px; }
+.collection-card h3 { font-size: 21px; margin: 0; font-weight: 550; letter-spacing: -.6px; }
+.collection-card-heading p { font-size: 8px; color: var(--muted); margin: 8px 0 0; line-height: 1.7; }
+.editor-pick { margin-left: auto; align-self: flex-start; padding: 5px 6px; border-radius: 4px; background: var(--selected); color: var(--accent); font-size: 7px; white-space: nowrap; }
+.collection-scene { position: relative; padding: 20px; min-height: 332px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.95; }
+.collection-stage-note { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 25px; color: var(--muted); font-size: 7px; line-height: 1.5; }
+.collection-stage-note > span:first-child { letter-spacing: 1.2px; }
+.collection-card[data-collection="aurora"] .collection-scene { background: linear-gradient(140deg, var(--paper) 15%, var(--wash) 100%); }
+.collection-card[data-collection="glass"] .collection-scene {
+  background-color: var(--wash);
+  background-image: linear-gradient(120deg, transparent 18%, rgba(33, 168, 189, .1) 18.3%, transparent 40%), linear-gradient(30deg, transparent 30%, rgba(118, 81, 140, .07) 30.3%, transparent 65%);
+}
+.collection-placeholder { color: var(--muted); font-size: 10px; line-height: 1.9; padding-top: 26px; }
+.collection-recipe { padding: 18px 20px 20px; }
+.collection-recipe > p { font-size: 10px; line-height: 1.9; color: var(--muted); min-height: 38px; margin: 0 0 18px; }
+.collection-recipe dl { margin: 0 0 19px; font-size: 9px; }
+.collection-recipe dl > div { display: flex; gap: 17px; margin-top: 10px; }
+.collection-recipe dt { color: var(--muted); }
+.collection-recipe dd { margin: 0; }
+.collection-recipe > button { display: flex; align-items: center; justify-content: space-between; width: 100%; font-size: 10px; padding: 9px 11px; }
+.collection-settings { display: flex; gap: 30px; align-items: center; border-bottom: 1px solid var(--line); padding: 23px 0; }
+.collection-settings label { font-size: 10px; width: 200px; }
+.collection-settings output { float: right; color: var(--muted); font-size: 9px; }
+.collection-settings input { width: 100%; margin: 15px 0 0; display: block; accent-color: var(--accent); height: 4px; }
+.collection-settings p { color: var(--muted); font-size: 9px; line-height: 1.8; margin: 0 0 0 auto; text-align: right; }
+.collection-code { border: 1px solid var(--line); border-radius: 8px; margin-top: 16px; background: var(--wash); }
+.collection-code .code-toolbar { border-top: 0; }
+.collection-code .code-toolbar > div { display: flex; gap: 8px; }
+.collection-code > p { color: var(--muted); font-size: 10px; padding: 0 20px; }
+.collection-disclaimer { color: var(--muted); font-size: 8px; line-height: 1.9; margin: 14px 0 0; }
+@media (forced-colors: active) { .collection-states button[aria-pressed="true"] { outline: 2px solid Highlight; } }

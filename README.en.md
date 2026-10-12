@@ -31,6 +31,7 @@ copyable React code, and three clearly labeled business simulations.
 | Explore | What you can do |
 | --- | --- |
 | All five orbs | Compare solving, composing, ping, band and ribbon side by side |
+| Response collections · NEW | Compare Clear, Aurora and Glass using synchronized output and copyable code |
 | Your brand | Edit colors, size, speed, density, dot scale and cursor width |
 | Real context | Simulate progress stages, streamed content, completion and stop |
 | Integration | Review APIs, licensing, accessibility behavior and security scope |
@@ -43,6 +44,63 @@ copyable React code, and three clearly labeled business simulations.
 </details>
 
 ![Design-token playground](https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/playground.png)
+
+## Response collections
+
+**Not just an orb: a coordinated response from thought to completion.**
+`ResponseExperience` composes existing primitives, with three opt-in treatments.
+Open [the local comparison](http://127.0.0.1:5188/#collections) and play the same
+simulated reply across all three, including completion and interruption states.
+
+| Preset | Thinking | Text and cursor | Completion | Suggested context |
+| --- | --- | --- | --- | --- |
+| **Clear** | Mono Composing, short label shimmer | Soft fade, fine beam | Quiet confirmation and fading line | Long conversations, everyday work |
+| **Aurora** | Solving, localized color aura | Blur-to-focus, breathing color dot | Multicolor fine-line finish | Branded assistants, creative work |
+| **Glass** | Ping, frosted status with light sweep | Glyph fade, short-line cursor | Glass recedes | Tool and agent coordination |
+
+Only the short status region gets glass or a glow, not the whole reply.
+These original treatments draw on Fluent motion/material principles; they are
+not Microsoft/Copilot components or pixel-identical recreations. See [NOTICE](NOTICE.md).
+
+```tsx
+import { ResponseExperience, type ResponsePhase } from '@guidoshar/chat-motion-react';
+import '@guidoshar/chat-motion-react/styles.css';
+
+export function Reply({ text, phase }: { text: string; phase: ResponsePhase }) {
+  return (
+    <ResponseExperience
+      preset="clear"
+      text={text}
+      phase={phase}
+      tokens={{ glyphFadeMs: 620, glassBlur: 14, sheenDurationMs: 3200 }}
+      announce
+    />
+  );
+}
+```
+
+The host drives `thinking → streaming → complete`; use `error` for failure,
+or `idle` for stopped/history output, retaining the accumulated text.
+There is no internal typing queue, server-content delay or automatic phase
+progression. Use a new `key={messageId}` per reply, and announce shared progress
+only once. `label` and `detail` accept public stage summaries; provide localized
+labels for your product (defaults are Chinese).
+
+Or mix the text treatments into your existing UI:
+
+```tsx
+<StreamingText text={text} phase="writing" reveal="soft" cursor="beam" />
+// reveal: fade | soft | blur | none
+// cursor: spectrum | beam | dot | line | none
+```
+
+Default fades are 620ms for Clear, 540ms for Aurora and 320ms for Glass.
+`glyphFadeMs` overrides them. Reduced motion disables the animated treatments;
+reduced transparency or missing backdrop-filter support gives Glass an opaque
+fallback. Apply `darkTokens` or your own dark surface tokens in dark interfaces.
+
+Documentation images remain actual **v0.2.1 captures**; they do not show or
+validate the new v0.3.0 collections. View those in the local showroom.
 
 ## Business context
 
@@ -68,19 +126,19 @@ boundaries, without claiming enterprise certification.
 ## Install
 
 This project is published on GitHub, **not on the npm registry**. Download the
-prebuilt `guidoshar-chat-motion-react-0.2.1.tgz` from the
-[v0.2.1 release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.2.1),
+prebuilt `guidoshar-chat-motion-react-0.3.0.tgz` from the
+[v0.3.0 release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.3.0),
 compare its SHA-256 with the release, then install:
 
 ```powershell
-Get-FileHash ./guidoshar-chat-motion-react-0.2.1.tgz -Algorithm SHA256
-npm install ./guidoshar-chat-motion-react-0.2.1.tgz --ignore-scripts
+Get-FileHash ./guidoshar-chat-motion-react-0.3.0.tgz -Algorithm SHA256
+npm install ./guidoshar-chat-motion-react-0.3.0.tgz --ignore-scripts
 ```
 
 Or install from a pinned Git tag (requires the npm `prepare` build script):
 
 ```powershell
-npm install "git+https://github.com/guidoshar/chat-motion-react.git#v0.2.1"
+npm install "git+https://github.com/guidoshar/chat-motion-react.git#v0.3.0"
 ```
 
 ESM only. React 18.2 or 19 is a peer dependency. Package tooling requires Node
@@ -174,6 +232,20 @@ Important bounds: orb size 16–192px, speed 0 (freeze) or 0.25–3×, density
 particle counts at small sizes. Cursor width 1–8px, fades 0–2000ms.
 See the [complete token table](README.md#token-对照).
 
+Response-specific tokens (all optional):
+
+| Token | CSS variable | Default / bounds |
+| --- | --- | --- |
+| `responseSurface` | `--cm-response-surface` | `rgba(247,250,255,.72)` |
+| `responseBorder` | `--cm-response-border` | `#DCE6F0` |
+| `responseRadius` | `--cm-response-radius` | 16px; 0–32px |
+| `glassBlur` | `--cm-glass-blur` | 14px; 0–24px |
+| `sheenDurationMs` | `--cm-sheen-duration` | 3200ms; 1200–8000ms |
+
+Glass falls back to `surfaceColor` without backdrop-filter. Cursor width defaults
+to 2px for beam and 3px otherwise; explicit tokens win. `cursorCycleMs` controls
+color flow in spectrum/dot; beam/dot/line breathing uses 1700/1800/2100ms.
+
 Token validation guards ordinary configuration mistakes. It is **not a hostile
 CSS sanitizer**. Treat props/style/theme objects as trusted configuration.
 
@@ -184,8 +256,15 @@ CSS sanitizer**. Treat props/style/theme objects as trusted configuration.
 - `StatusPill`: required label; status running/success/error/idle; size sm/md/lg;
   appearance plain/soft; announce; variant/speed/paused/colorMode/density/
   dotScale/palette. Default icon sizes: 28/36/56px.
-- `StreamingText`: required text; phase writing/settled/idle; paused.
-- All three accept tokens, style and className.
+- `StreamingText`: required text; phase writing/settled/idle; paused;
+  reveal fade/soft/blur/none; cursor spectrum/beam/dot/line/none.
+- `ResponseExperience`: required text; preset clear/aurora/glass (default clear);
+  phase thinking/streaming/complete/error/idle (default thinking); label, detail,
+  paused and announce (both false by default). Default status icon/label: 32/13px.
+- `responsePresets` exports each preset's orb, color mode, reveal and cursor
+  mapping. `ResponsePreset`, `ResponsePhase`, `TextReveal` and `StreamCursor`
+  are exported types.
+- All components accept tokens, style and className.
 
 ## SSE integration
 
@@ -225,6 +304,9 @@ Display only public progress summaries, not private model reasoning.
 - Orbs stop offscreen/background/paused, at zero speed, with reduced motion or
   forced colors. Forced colors uses a static system-color ring.
 - Pausing motion does not cancel a stream or block text updates.
+- ResponseExperience also coordinates CSS motion with viewport/background
+  visibility. Shimmer is restricted to the short public status label. Material
+  blur is limited to the status surface; the reply remains unboxed.
 - Only the newest 24 graphemes animate. Tail segmentation uses a 2,048-code-unit
   window, expanded if needed to preserve a boundary. Text is never truncated.
   Without Intl.Segmenter, fallback is code points, not full grapheme handling.
@@ -256,10 +338,13 @@ project-local Playwright and an isolated headless browser to regenerate the
 documentation screenshots. It does not use your browser profile or run in CI.
 Documentation images live in the repository, not in the runtime package.
 
-v0.2.1 fixes the demo's JSX runtime configuration (`React is not defined`).
-Verification covers package/demo builds, packaging checks and focused local
-desktop Chrome capture/interactions. It is not a full regression, cross-browser,
-React-version, accessibility or security certification. See
+v0.3.0 verification covers TypeScript/package/demo builds and static package
+inventory checks only. No new runtime tests, screenshots or browser checks were
+run for this release; validate the new treatments in your host environment.
+The retained v0.2.1 screenshots came from a focused desktop Chrome check after
+fixing the demo's JSX runtime (`React is not defined`), not the new collections.
+This is not a full regression, cross-browser, React-version, accessibility or
+security certification. See
 [CONTRIBUTING](CONTRIBUTING.md) for the production acceptance checklist.
 
 ## License

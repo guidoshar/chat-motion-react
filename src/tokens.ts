@@ -34,6 +34,12 @@ export interface MotionTokens {
   glyphFadeMs?: number;
   cursorCycleMs?: number;
   cursorSettleMs?: number;
+  /** Response collection surfaces and timing; styles remain trusted host configuration. */
+  responseSurface?: string;
+  responseBorder?: string;
+  responseRadius?: number;
+  glassBlur?: number;
+  sheenDurationMs?: number;
 }
 
 const tokenMap = {
@@ -50,6 +56,9 @@ const tokenMap = {
   cursorHeight: ['--cm-cursor-height', ''], cursorGap: ['--cm-cursor-gap', 'px'],
   glyphFadeMs: ['--cm-glyph-fade', 'ms'], cursorCycleMs: ['--cm-cursor-cycle', 'ms'],
   cursorSettleMs: ['--cm-cursor-settle', 'ms'],
+  responseSurface: ['--cm-response-surface', ''], responseBorder: ['--cm-response-border', ''],
+  responseRadius: ['--cm-response-radius', 'px'], glassBlur: ['--cm-glass-blur', 'px'],
+  sheenDurationMs: ['--cm-sheen-duration', 'ms'],
 } as const satisfies Record<keyof MotionTokens, readonly [string, string]>;
 
 const bounds: Partial<Record<keyof MotionTokens, readonly [number, number]>> = {
@@ -57,6 +66,7 @@ const bounds: Partial<Record<keyof MotionTokens, readonly [number, number]>> = {
   labelSize: [8, 48], gap: [0, 48], pillRadius: [0, 999],
   cursorWidth: [1, 8], cursorGap: [0, 24], glyphFadeMs: [0, 2000],
   cursorCycleMs: [500, 10000], cursorSettleMs: [0, 2000],
+  responseRadius: [0, 32], glassBlur: [0, 24], sheenDurationMs: [1200, 8000],
 };
 
 /** Usable on any host element, without a provider or a runtime theme dependency. */
@@ -85,4 +95,5 @@ export const darkTokens = {
   orbInk: '#D3DCE7',
   textColor: '#D3E6F6', mutedColor: '#A2B6C8', surfaceColor: '#182635',
   borderColor: '#2B4055', successColor: '#78C7B3', errorColor: '#F5A0A8',
+  responseSurface: 'rgba(24, 38, 53, .76)', responseBorder: 'rgba(174, 201, 228, .22)',
 } satisfies MotionTokens;

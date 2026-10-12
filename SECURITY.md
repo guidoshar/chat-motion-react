@@ -30,6 +30,12 @@ without disclosing vulnerability details. No response-time SLA is promised.
   input. It is a configuration guard, not a security parser for hostile CSS.
 - Runtime dependencies consist of the host's React peer; build/demo tooling is
   separate. Release assets are prebuilt and include license notices.
+- Response collections compose those same presentation primitives. They do not
+  infer task state, queue output, simulate a backend, or expose internal model
+  reasoning. All phase labels and reply content come from the host.
+- Text-reveal effects are limited to the newest 24 graphemes; Glass blur tokens
+  are clamped to 0–24px. Reduced-motion/forced-color treatments and an opaque
+  material fallback are provided, not an accessibility or performance certification.
 
 ## Host application responsibilities
 

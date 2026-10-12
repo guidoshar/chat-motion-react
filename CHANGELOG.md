@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.3.0
+
+### Added
+
+- Three coordinated response collections: Clear (quiet shimmer, soft text,
+  beam cursor), Aurora (local color aura, blur-to-focus text, breathing dot),
+  and Glass (frosted status, light sweep, short-line cursor).
+- `ResponseExperience` composes public status, streamed text and completion
+  treatment. The host owns thinking/streaming/complete/error/idle transitions.
+- Exported `responsePresets`, `ResponsePreset`, `ResponsePhase` and typed props.
+- Additive `StreamingText.reveal` and `cursor` controls. Existing fade/spectrum
+  defaults and standalone component APIs remain unchanged.
+- Glass surface/border/radius/blur and shimmer-duration design tokens.
+- Synchronized local collection comparison, phase controls, material controls
+  and copyable integration snippets.
+
+### Boundaries and verification
+
+- No new runtime dependency, network call, telemetry or simulated phase logic
+  in the library. Only the explicitly labeled showroom uses timed mock output.
+- Response motion respects reduced motion, forced colors, page/viewport
+  visibility and pause. Glass has opaque and reduced-transparency fallbacks.
+- TypeScript/package/demo builds and static publish-inventory checks only.
+  No new runtime tests, screenshots or browser checks were run for this release.
+- README images remain explicitly labeled v0.2.1 captures. New collections
+  require host-product visual, browser and accessibility acceptance.
+
 ## 0.2.1
 
 ### Fixed

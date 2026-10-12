@@ -3,12 +3,18 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motionTokens, type MotionTokens, type MotionStyle } from './tokens.js';
 
+export type TextReveal = 'fade' | 'soft' | 'blur' | 'none';
+export type StreamCursor = 'spectrum' | 'beam' | 'dot' | 'line' | 'none';
+
 export interface StreamingTextProps {
   /** Full accumulated text, not the latest delta. Rendered as text, never HTML. */
   text: string;
   /** settled fades out the cursor; idle renders history with no cursor. */
   phase?: 'writing' | 'settled' | 'idle';
   paused?: boolean;
+  /** Additive presentation options; existing fade + spectrum remain the default. */
+  reveal?: TextReveal;
+  cursor?: StreamCursor;
   tokens?: MotionTokens;
   style?: MotionStyle;
   className?: string;
@@ -18,7 +24,7 @@ const segmenter = typeof Intl.Segmenter === 'function'
   ? new Intl.Segmenter('zh-CN', { granularity: 'grapheme' }) : null;
 
 /** Presentation only. The caller owns SSE transport, server content and stream lifetime. */
-export function StreamingText({ text, phase = 'writing', paused = false, tokens, style, className = '' }: StreamingTextProps) {
+export function StreamingText({ text, phase = 'writing', paused = false, reveal = 'fade', cursor = 'spectrum', tokens, style, className = '' }: StreamingTextProps) {
   // Keep the server and the first client render identical. No document access during render.
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
@@ -47,9 +53,9 @@ export function StreamingText({ text, phase = 'writing', paused = false, tokens,
     return { prefix, tail };
   }, [text, phase]);
 
-  return <span className={`cm-stream ${className}`} data-phase={phase} data-motion-paused={paused || hidden}
+  return <span className={`cm-stream ${className}`} data-phase={phase} data-reveal={reveal} data-cursor={cursor} data-motion-paused={paused || hidden}
     style={{ ...motionTokens(tokens), ...style }}>
     {prefix}{tail.map(({ glyph, offset }) => <span className="cm-stream-glyph" key={`${offset}:${glyph}`}>{glyph}</span>)}
-    {phase !== 'idle' && <span className="cm-stream-caret" aria-hidden="true"><i/></span>}
+    {phase !== 'idle' && cursor !== 'none' && <span className="cm-stream-caret" aria-hidden="true"><i/></span>}
   </span>;
 }

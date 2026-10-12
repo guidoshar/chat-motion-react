@@ -15,6 +15,8 @@ const [bundle] = JSON.parse(output);
 const docs = ['README.md', 'README.en.md', 'LICENSE', 'NOTICE.md',
   'THIRD_PARTY_NOTICES.md', 'SECURITY.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'package.json'];
 const required = [...docs, 'dist/index.js', 'dist/index.d.ts', 'dist/styles.css',
+  'dist/ResponseExperience.js', 'dist/ResponseExperience.d.ts',
+  'dist/responsePresets.js', 'dist/responsePresets.d.ts', 'dist/useMotionActivity.js',
   'examples/SseReply.tsx'];
 const names = new Set(bundle.files.map(file => file.path));
 const allowed = path => docs.includes(path) || path === 'examples/SseReply.tsx'

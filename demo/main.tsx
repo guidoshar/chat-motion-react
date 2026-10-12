@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { MotionTheme, ThinkingOrb, StatusPill, StreamingText, darkTokens, type MotionTokens, type OrbVariant, type OrbColorMode } from '../src/index.js';
 import '../src/styles.css';
 import './styles.css';
+import { ResponseCollections } from './ResponseCollections.js';
 
 const repository = 'https://github.com/guidoshar/chat-motion-react';
 const variants: { id: OrbVariant; name: string; description: string; use: string }[] = [
@@ -114,12 +115,13 @@ const tokens = ${JSON.stringify({ ...tokens, orbSize: size }, null, 2)};
       <p className="sidebar-label">EXPLORE</p>
       <nav aria-label="展厅导航">
         <a href="#overview"><span>01</span> 组件总览 <Arrow/></a>
-        <a href="#playground"><span>02</span> 动效实验室 <Arrow/></a>
-        <a href="#scenarios"><span>03</span> 业务场景 <Arrow/></a>
-        <a href="#integration"><span>04</span> 接入与保障 <Arrow/></a>
+        <a href="#collections"><span>02</span> 响应组合 <Arrow/></a>
+        <a href="#playground"><span>03</span> 动效实验室 <Arrow/></a>
+        <a href="#scenarios"><span>04</span> 业务场景 <Arrow/></a>
+        <a href="#integration"><span>05</span> 接入与保障 <Arrow/></a>
       </nav>
       <div className="sidebar-note"><span className="live-dot"/> LOCAL PLAYGROUND<p>从一个微小的等待，<br/>到一段清晰的对话。</p><small>不连接模型，不发送业务数据。</small></div>
-      <div className="sidebar-bottom"><a href={repository} target="_blank" rel="noreferrer">Source on GitHub <Arrow diagonal/></a><span>MIT LICENSE · v0.2.1</span></div>
+      <div className="sidebar-bottom"><a href={repository} target="_blank" rel="noreferrer">Source on GitHub <Arrow diagonal/></a><span>MIT LICENSE · v0.3.0</span></div>
     </aside>
     <div className="page">
       <header className="topbar"><span>COMPONENTS / CHAT EXPERIENCE</span><div><button aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? '继续动效' : '暂停动效'}</button><button aria-pressed={dark} data-action="theme" onClick={() => setDark(!dark)}>{dark ? '浅色模式' : '深色模式'}</button><a href={repository + '#readme'}>文档 <Arrow diagonal/></a></div></header>
@@ -134,6 +136,7 @@ const tokens = ${JSON.stringify({ ...tokens, orbSize: size }, null, 2)};
           <div className="collection-footnote"><span>无外框是默认选项。需要时，也可以加一层轻胶囊。</span><span>5 variants · 2 primitives · your brand</span></div>
         </section>
 
+        <ResponseCollections paused={paused}/>
         <section id="playground" className="section playground-section">
           <div className="section-heading"><div><p className="eyebrow">MAKE IT YOURS</p><h2>你的品牌，你的节奏。</h2></div><p>颜色、尺寸、粒子与光标，一处调整。<br/>复制可用代码，带回你的产品。</p></div>
           <div className="playground">
@@ -169,7 +172,7 @@ const tokens = ${JSON.stringify({ ...tokens, orbSize: size }, null, 2)};
           <div className="section-heading"><div><p className="eyebrow">SMALL SURFACE. CLEAR BOUNDARIES.</p><h2>融入产品，不接管你的系统。</h2></div><a href={repository + '#在其他-react-项目安装'}>开始接入 <Arrow diagonal/></a></div>
           <div className="integration-grid"><article><span>01 / CONNECT</span><h3>保留已有的数据链路</h3><p>接入你已有的 SSE、fetch 或状态机。把累积文本和公开阶段传进来，渲染由组件完成。</p></article><article><span>02 / CUSTOMIZE</span><h3>遵循你的设计体系</h3><p>不强制 UI 框架，不覆盖全局字体。通过共享 token，与 HeroUI、Fluent UI 或原生页面组合。</p></article><article><span>03 / RESPECT</span><h3>尊重用户与安全边界</h3><p>支持减少动态效果与高对比度。不采集数据、不读取密钥，也不替代后端授权与安全审计。</p></article></div>
           <div className="docs-strip"><div><strong>从视觉反馈，到可维护的组件。</strong><p>MIT 许可、中英文文档、完整来源署名与安全边界，随仓库公开。</p></div><a className="primary-link" href={repository}>查看开源仓库 <Arrow diagonal/></a></div>
-          <p className="footnote">业务场景仅作交互示例，不承诺业务结果。此库尚未通过独立安全审计或无障碍认证。v0.2.1 的本地桌面截图与交互检查不代表跨浏览器兼容性认证。</p>
+          <p className="footnote">业务场景仅作交互示例，不承诺业务结果。此库尚未通过独立安全审计或无障碍认证。v0.3.0 完成构建与发布包检查，新增响应组合尚未做浏览器交互验收。</p>
         </section>
       </main>
       <footer><span className="footer-brand">chat motion<span>MAKE WAITING FEEL LIKE PROGRESS.</span></span><div><a href={repository + '/blob/main/LICENSE'}>MIT License</a><a href={repository + '/blob/main/SECURITY.md'}>Security</a><a href={repository + '/blob/main/THIRD_PARTY_NOTICES.md'}>Credits</a></div></footer>

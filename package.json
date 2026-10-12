@@ -1,6 +1,6 @@
 {
   "name": "@guidoshar/chat-motion-react",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Themeable React thinking animations and streaming text cursors. Canvas + CSS, no UI framework required.",
   "type": "module",
   "license": "MIT",

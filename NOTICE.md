@@ -9,3 +9,10 @@ The original visual references were the **band**, **ping** and **ribbon** thinki
 The default five-stop palette (cyan, blue, violet, red, orange) approximates a user-supplied Saint-Gobain brand mark for screen UI use. It is not an official brand specification. No Saint-Gobain or Norton logos, trademarks as artwork, mascots, photos or business content are distributed in this package. Names mentioned for context remain the property of their respective owners; there is no affiliation or endorsement implied.
 
 The MIT license covers the code in this repository, not rights to third-party trademarks or referenced designs. Consumers should supply approved brand assets and design tokens for their own use.
+
+The Clear, Aurora and Glass response collections are original CSS compositions,
+informed by the public [Fluent motion](https://fluent2.microsoft.design/motion)
+and [material](https://fluent2.microsoft.design/material) principles and a
+user-supplied Copilot screenshot. No Microsoft code or artwork is copied.
+They are not official Fluent/Copilot components, a pixel-identical recreation,
+or a claim of Microsoft affiliation or endorsement.
