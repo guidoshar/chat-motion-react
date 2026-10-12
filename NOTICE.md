@@ -16,3 +16,9 @@ and [material](https://fluent2.microsoft.design/material) principles and a
 user-supplied Copilot screenshot. No Microsoft code or artwork is copied.
 They are not official Fluent/Copilot components, a pixel-identical recreation,
 or a claim of Microsoft affiliation or endorsement.
+
+Bloom and Filament (v0.4) are independently implemented continuous-surface and
+projected-path renderers. Bloom takes a soft, Fluent/Copilot-inspired visual
+direction; Filament is an original light-strand treatment. Neither is a new
+name for the earlier particle geometries, a Microsoft asset, or a promise of
+matching a particular product's animation.

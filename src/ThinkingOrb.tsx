@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { orbColors, orbFrame, safePalette, type OrbVariant, type OrbColorMode } from './orbGeometry.js';
 import { motionTokens, spectrumPalette, type MotionPalette, type MotionTokens, type MotionStyle } from './tokens.js';
+import { paintSculpturalOrb } from './sculpturalOrb.js';
 
 export interface ThinkingOrbProps {
   variant?: OrbVariant;
@@ -13,7 +14,7 @@ export interface ThinkingOrbProps {
   paused?: boolean;
   /** Quiet neutral ink with brand highlights, or a completely monochrome orb. */
   colorMode?: OrbColorMode;
-  /** Multipliers, bounded to 0.5–1.5 and 0.5–2 respectively. */
+  /** Detail and weight: particles, or folds/strands and edge width for sculptural orbs. */
   density?: number;
   dotScale?: number;
   /** Six-digit hex stops. Overrides theme colors for this orb only. */
@@ -69,6 +70,10 @@ export function ThinkingOrb({ variant = 'band', size, speed, paused = false, col
     };
     const paint = () => {
       context.clearRect(0, 0, dimension, dimension);
+      if (variant === 'bloom' || variant === 'filament') {
+        paintSculpturalOrb(context, variant, dimension, elapsed.current, colors, particleDensity, particleScale);
+        return;
+      }
       for (const dot of orbFrame(variant, elapsed.current, { size: dimension, density: particleDensity, dotScale: particleScale })) {
         context.globalAlpha = dot.opacity;
         context.fillStyle = colors[Math.round(dot.emphasis * 7) * 64 + Math.round(dot.color * 63)];

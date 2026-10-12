@@ -36,6 +36,9 @@ without disclosing vulnerability details. No response-time SLA is promised.
 - Text-reveal effects are limited to the newest 24 graphemes; Glass blur tokens
   are clamped to 0–24px. Reduced-motion/forced-color treatments and an opaque
   material fallback are provided, not an accessibility or performance certification.
+- Sculptural Orb renderers use bounded continuous paths (up to 7 folds or
+  12 strands × 97 vertices), not external images or shader downloads. They share
+  the same visibility, reduced-motion, DPR and speed controls as particle orbs.
 
 ## Host application responsibilities
 

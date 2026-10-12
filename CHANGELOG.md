@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.4.0
+
+### Added
+
+- Two genuinely new Orb shapes with independent Canvas renderers, not wrappers
+  or recolors of the five particle variants:
+  - `bloom`: breathing continuous surface, chromatic volumes and folded light.
+  - `filament`: projected 3D light strands, depth-separated lines and moving glints.
+- Matching `ResponseExperience` presets: bloom / filament.
+- New text reveals resolve / ink, and cursors prism / nib. All previous defaults
+  and variants remain unchanged.
+- Shared palette/mono/speed/pause behavior. For the new shapes, density controls
+  fold/strand count and dotScale controls edge weight, with bounded geometry.
+- Showroom foregrounds the two new shapes, with large/inline examples and a
+  separate group for the previous three compositions.
+
+### Verification
+
+- TypeScript/package/demo builds and static package checks only. No runtime
+  tests, new screenshots or browser checks were run. Host-product acceptance
+  remains necessary. Existing README captures remain labeled v0.2.1.
+
 ## 0.3.0
 
 ### Added

@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motionTokens, type MotionTokens, type MotionStyle } from './tokens.js';
 
-export type TextReveal = 'fade' | 'soft' | 'blur' | 'none';
-export type StreamCursor = 'spectrum' | 'beam' | 'dot' | 'line' | 'none';
+export type TextReveal = 'fade' | 'soft' | 'blur' | 'resolve' | 'ink' | 'none';
+export type StreamCursor = 'spectrum' | 'beam' | 'dot' | 'line' | 'prism' | 'nib' | 'none';
 
 export interface StreamingTextProps {
   /** Full accumulated text, not the latest delta. Rendered as text, never HTML. */

@@ -235,3 +235,50 @@
   .cm-response[data-preset="glass"] .cm-response-heading { background: Canvas; border-color: CanvasText; backdrop-filter: none; -webkit-backdrop-filter: none; }
   .cm-stream .cm-stream-caret::before { background: CanvasText; animation: none; }
 }
+
+/* New sculptural orbs, paired with new text treatments. No container effects. */
+.cm-response:where([data-preset="bloom"], [data-preset="filament"]) .cm-response-status {
+  --_cm-orb-size: 44px; --_cm-label-size: 14px; --_cm-gap: 9px; font-weight: 450;
+}
+.cm-response:where([data-preset="bloom"], [data-preset="filament"]) .cm-response-detail { margin-inline-start: 53px; }
+.cm-stream:where([data-reveal="resolve"]) { --_cm-glyph-fade: 740ms; }
+.cm-stream:where([data-reveal="resolve"]) .cm-stream-glyph { animation-name: cm-ink-resolve; }
+.cm-stream:where([data-reveal="ink"]) { --_cm-glyph-fade: 480ms; }
+.cm-stream:where([data-reveal="ink"]) .cm-stream-glyph { animation-name: cm-ink-trace; }
+.cm-stream:where([data-cursor="prism"], [data-cursor="nib"]) .cm-stream-caret > i,
+.cm-stream:where([data-cursor="prism"], [data-cursor="nib"]) .cm-stream-caret::after { display: none; }
+.cm-stream:where([data-cursor="prism"]) .cm-stream-caret { animation: cm-beam-breathe 2400ms ease-in-out infinite; }
+.cm-stream:where([data-cursor="prism"]) .cm-stream-caret::before {
+  width: calc(var(--cm-cursor-width, 3px) + 3px); top: .12em; bottom: .12em;
+  border-radius: 60% 40% 45% 55% / 50% 40% 60% 50%;
+  background: linear-gradient(155deg, var(--cm-cyan, #21a8bd), var(--cm-blue, #1775b9), var(--cm-violet, #76518c), var(--cm-orange, #f28b2c));
+  background-size: 100% 200%; animation: cm-prism-morph var(--cm-cursor-cycle, 2800ms) ease-in-out infinite;
+}
+.cm-stream:where([data-cursor="nib"]) { padding-inline-end: calc(var(--cm-cursor-gap, 4px) + var(--cm-cursor-width, 3px) * 3 + 3px); }
+.cm-stream:where([data-cursor="nib"]) .cm-stream-caret { animation: cm-beam-breathe 2000ms ease-in-out infinite; }
+.cm-stream:where([data-cursor="nib"]) .cm-stream-caret::before {
+  top: auto; bottom: .18em; width: calc(var(--cm-cursor-width, 3px) * 3); height: 2px;
+  border-radius: 100%; transform: rotate(-30deg); transform-origin: center;
+  background: linear-gradient(90deg, transparent, var(--cm-blue, #1775b9), var(--cm-cyan, #21a8bd));
+  animation: none;
+}
+@keyframes cm-ink-resolve {
+  0% { opacity: .08; filter: blur(1.1px); }
+  55% { opacity: .65; filter: blur(.15px); }
+  100% { opacity: 1; filter: blur(0); }
+}
+@keyframes cm-ink-trace {
+  0% { opacity: .18; text-shadow: 0 0 3px var(--cm-cyan, #21a8bd); }
+  45% { opacity: .8; text-shadow: 0 0 1px var(--cm-cyan, #21a8bd); }
+  100% { opacity: 1; text-shadow: 0 0 0 transparent; }
+}
+@keyframes cm-prism-morph {
+  0%, 100% { border-radius: 60% 40% 45% 55% / 50% 40% 60% 50%; background-position: 50% 0%; }
+  50% { border-radius: 40% 60% 55% 45% / 40% 60% 40% 60%; background-position: 50% 100%; }
+}
+@media (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .cm-stream .cm-stream-glyph { animation: none !important; filter: none; text-shadow: none; }
+}
+@media (forced-colors: active) {
+  .cm-stream .cm-stream-caret::before { background: CanvasText; animation: none; }
+}

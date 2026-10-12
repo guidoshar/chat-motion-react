@@ -7,4 +7,4 @@ export { ResponseExperience, type ResponseExperienceProps, type ResponsePhase } 
 export { responsePresets, type ResponsePreset, type ResponsePresetDefinition } from './responsePresets.js';
 export { MotionTheme, type MotionThemeProps } from './MotionTheme.js';
 export { motionTokens, spectrumPalette, darkTokens, type MotionTokens, type MotionStyle, type MotionPalette } from './tokens.js';
-export { orbVariants, type OrbVariant, type OrbColorMode } from './orbGeometry.js';
+export { orbVariants, type OrbVariant, type OrbColorMode, type SculpturalOrbVariant, type ParticleOrbVariant } from './orbGeometry.js';

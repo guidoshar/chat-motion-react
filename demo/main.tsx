@@ -7,6 +7,8 @@ import { ResponseCollections } from './ResponseCollections.js';
 
 const repository = 'https://github.com/guidoshar/chat-motion-react';
 const variants: { id: OrbVariant; name: string; description: string; use: string }[] = [
+  { id: 'bloom', name: 'Bloom', description: '连续曲面，柔光在球内流动。', use: '全新形态 · Fluent-inspired' },
+  { id: 'filament', name: 'Filament', description: '光丝交织，流光沿线游走。', use: '全新形态 · 轻盈空间感' },
   { id: 'solving', name: 'Solving', description: '分层扭转，打乱再归位。', use: '理解需求 · 规则推演' },
   { id: 'composing', name: 'Composing', description: '固定朝向，思绪随波起伏。', use: '组织内容 · 生成回答' },
   { id: 'ping', name: 'Ping', description: '一束光环，沿球面往返。', use: '检索资料 · 调用工具' },
@@ -49,7 +51,7 @@ function Demo() {
   const [paused, setPaused] = useState(false);
   const [preset, setPreset] = useState('spectrum');
   const [palette, setPalette] = useState<MotionTokens>(presets.spectrum);
-  const [variant, setVariant] = useState<OrbVariant>('composing');
+  const [variant, setVariant] = useState<OrbVariant>('bloom');
   const [size, setSize] = useState(96);
   const [speed, setSpeed] = useState(1);
   const [density, setDensity] = useState(1);
@@ -121,7 +123,7 @@ const tokens = ${JSON.stringify({ ...tokens, orbSize: size }, null, 2)};
         <a href="#integration"><span>05</span> 接入与保障 <Arrow/></a>
       </nav>
       <div className="sidebar-note"><span className="live-dot"/> LOCAL PLAYGROUND<p>从一个微小的等待，<br/>到一段清晰的对话。</p><small>不连接模型，不发送业务数据。</small></div>
-      <div className="sidebar-bottom"><a href={repository} target="_blank" rel="noreferrer">Source on GitHub <Arrow diagonal/></a><span>MIT LICENSE · v0.3.0</span></div>
+      <div className="sidebar-bottom"><a href={repository} target="_blank" rel="noreferrer">Source on GitHub <Arrow diagonal/></a><span>MIT LICENSE · v0.4.0</span></div>
     </aside>
     <div className="page">
       <header className="topbar"><span>COMPONENTS / CHAT EXPERIENCE</span><div><button aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? '继续动效' : '暂停动效'}</button><button aria-pressed={dark} data-action="theme" onClick={() => setDark(!dark)}>{dark ? '浅色模式' : '深色模式'}</button><a href={repository + '#readme'}>文档 <Arrow diagonal/></a></div></header>
@@ -129,11 +131,11 @@ const tokens = ${JSON.stringify({ ...tokens, orbSize: size }, null, 2)};
         <section id="overview" className="overview">
           <div className="hero">
             <div className="hero-copy"><p className="eyebrow"><span/> A LITTLE MOTION. A CLEARER CONVERSATION.</p><h1>让每一步等待，<br/><em>都有清晰的回应。</em></h1><p className="hero-description">为 AI 产品构建有温度的进展反馈。<br/>从理解、检索到输出，用轻量动效让用户知道正在发生什么。</p><div className="hero-actions"><a className="primary-link" href="#playground">探索组件 <Arrow/></a><a href="#scenarios">看看业务中的样子 <Arrow diagonal/></a></div><div className="hero-tags"><span>React + TypeScript</span><span>Canvas + CSS</span><span>MIT 开源</span></div></div>
-            <div className="hero-preview"><div className="preview-caption"><span className="live-dot"/> PRESENTATION, NOT YOUR BACKEND<span>LIVE</span></div><div className="hero-orb"><ThinkingOrb variant="composing" size={156} paused={paused} colorMode={colorMode}/></div><p className="hero-state">把等待，变成看得见的进展。</p><div className="hero-stream"><StreamingText text="正在把零散信息，整理成清晰的回答" phase="writing" paused={paused}/></div><div className="preview-bottom"><span>真实组件 · 示例文案</span><span>01 / ORBS & STREAMING</span></div></div>
+            <div className="hero-preview"><div className="preview-caption"><span className="live-dot"/> NEW / BLOOM<span>LIVE</span></div><div className="hero-orb"><ThinkingOrb variant="bloom" size={156} paused={paused} colorMode={colorMode}/></div><p className="hero-state">新的形态，新的回应方式。</p><div className="hero-stream"><StreamingText text="正在把零散信息，整理成清晰的回答" phase="writing" reveal="resolve" cursor="prism" paused={paused}/></div><div className="preview-bottom"><span>连续曲面 · 不再只是粒子</span><a href="#collections">体验新组合 →</a></div></div>
           </div>
-          <div className="section-heading"><div><p className="eyebrow">THE FULL COLLECTION</p><h2>五种动作，各有所长。</h2></div><p>同一套 API，不同的反馈节奏。<br/>点击选择，在下方自由调整。</p></div>
+          <div className="section-heading"><div><p className="eyebrow">THE FULL COLLECTION / 07</p><h2>七种形态，各有所长。</h2></div><p>新增曲面与光丝，保留五种点阵。<br/>点击选择，在下方自由调整。</p></div>
           <div className="orb-gallery">{variants.map((item, index) => <button className="orb-card" data-variant={item.id} key={item.id} aria-pressed={variant === item.id} onClick={() => setVariant(item.id)}><div className="orb-card-top"><span>0{index + 1}</span><span className="card-selected">{variant === item.id ? '已选择' : '选择'} <Arrow/></span></div><div className="orb-card-stage"><ThinkingOrb variant={item.id} size={96} paused={paused} colorMode={colorMode}/></div><strong>{item.name}</strong><p>{item.description}</p><small>{item.use}</small></button>)}</div>
-          <div className="collection-footnote"><span>无外框是默认选项。需要时，也可以加一层轻胶囊。</span><span>5 variants · 2 primitives · your brand</span></div>
+          <div className="collection-footnote"><span>无外框是默认选项。需要时，也可以加一层轻胶囊。</span><span>7 orb variants · 5 response presets · your brand</span></div>
         </section>
 
         <ResponseCollections paused={paused}/>
@@ -172,7 +174,7 @@ const tokens = ${JSON.stringify({ ...tokens, orbSize: size }, null, 2)};
           <div className="section-heading"><div><p className="eyebrow">SMALL SURFACE. CLEAR BOUNDARIES.</p><h2>融入产品，不接管你的系统。</h2></div><a href={repository + '#在其他-react-项目安装'}>开始接入 <Arrow diagonal/></a></div>
           <div className="integration-grid"><article><span>01 / CONNECT</span><h3>保留已有的数据链路</h3><p>接入你已有的 SSE、fetch 或状态机。把累积文本和公开阶段传进来，渲染由组件完成。</p></article><article><span>02 / CUSTOMIZE</span><h3>遵循你的设计体系</h3><p>不强制 UI 框架，不覆盖全局字体。通过共享 token，与 HeroUI、Fluent UI 或原生页面组合。</p></article><article><span>03 / RESPECT</span><h3>尊重用户与安全边界</h3><p>支持减少动态效果与高对比度。不采集数据、不读取密钥，也不替代后端授权与安全审计。</p></article></div>
           <div className="docs-strip"><div><strong>从视觉反馈，到可维护的组件。</strong><p>MIT 许可、中英文文档、完整来源署名与安全边界，随仓库公开。</p></div><a className="primary-link" href={repository}>查看开源仓库 <Arrow diagonal/></a></div>
-          <p className="footnote">业务场景仅作交互示例，不承诺业务结果。此库尚未通过独立安全审计或无障碍认证。v0.3.0 完成构建与发布包检查，新增响应组合尚未做浏览器交互验收。</p>
+          <p className="footnote">业务场景仅作交互示例，不承诺业务结果。此库尚未通过独立安全审计或无障碍认证。v0.4.0 完成构建与发布包检查，新增 Orb 与文字效果尚未做浏览器交互验收。</p>
         </section>
       </main>
       <footer><span className="footer-brand">chat motion<span>MAKE WAITING FEEL LIKE PROGRESS.</span></span><div><a href={repository + '/blob/main/LICENSE'}>MIT License</a><a href={repository + '/blob/main/SECURITY.md'}>Security</a><a href={repository + '/blob/main/THIRD_PARTY_NOTICES.md'}>Credits</a></div></footer>

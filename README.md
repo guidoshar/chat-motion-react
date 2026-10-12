@@ -2,16 +2,16 @@
   <img src="https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/wordmark.svg" width="340" alt="Chat Motion React" />
   <h1>让每一步等待，都有清晰的回应。</h1>
   <p><strong>Thinking orbs & streaming text, built to fit your brand.</strong></p>
-  <p>五种思考动效 · 三套完整响应组合 · 流式文字与品牌色光标</p>
+  <p>七种 Orb 形态 · 五套响应组合 · 流式文字与品牌色光标</p>
   <p><code>React + TypeScript</code> · <code>Canvas 2D + CSS</code> · <code>MIT</code> · <code>无遥测</code></p>
-  <p><a href="#组件展厅">看效果</a> · <a href="#三套响应组合">看新组合</a> · <a href="#业务中的用法">看场景</a> · <a href="#在其他-react-项目安装">开始接入</a> · <a href="README.en.md">English</a></p>
+  <p><a href="#组件展厅">看效果</a> · <a href="#全新-orb-与配套文字">看新 Orb</a> · <a href="#业务中的用法">看场景</a> · <a href="#在其他-react-项目安装">开始接入</a> · <a href="README.en.md">English</a></p>
 </div>
 
 [![Build and package](https://github.com/guidoshar/chat-motion-react/actions/workflows/build.yml/badge.svg)](https://github.com/guidoshar/chat-motion-react/actions/workflows/build.yml)
 
 ![Chat Motion 浅色组件展厅：五种 Orb 与流式光标](https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/gallery-light.png)
 
-<sub>文档截图保留 v0.2.1 的实际本地页面；v0.3.0 新增的响应组合请在本地展厅查看，未用旧图冒充新效果。</sub>
+<sub>文档截图保留 v0.2.1 的实际本地页面；v0.3 / v0.4 新增内容请在本地展厅查看，未用旧图冒充新效果。</sub>
 
 **不是再加一个 loading，而是让用户理解当前进展。**
 当 AI 产品在理解问题、检索资料或组织回答时，Chat Motion 提供一致、克制、可定制的视觉反馈。你保留已有的模型、SSE 和业务流程；我们提供可以单独使用的思考动画、状态文字和流式光标。
@@ -22,12 +22,12 @@
 
 ## 组件展厅
 
-仓库内置完整的桌面展示页，启动后访问 **http://127.0.0.1:5188**。不是静态效果图：五种 Orb 都在运行，可切换主题、调整参数并体验示例流程。没有公开托管的在线 Demo。
+仓库内置完整的桌面展示页，启动后访问 **http://127.0.0.1:5188**。不是静态效果图：七种 Orb 可切换主题、调整参数并体验示例流程。没有公开托管的在线 Demo。
 
 | 展区 | 可以做什么 |
 | --- | --- |
-| **组件总览** | 同屏比较 Solving / Composing / Ping / Band / Ribbon |
-| **响应组合 · NEW** | 同步体验 Clear / Aurora / Glass 的思考、输出、完成与中断；复制接入代码 |
+| **组件总览** | 比较新 Bloom / Filament 与原有五种粒子 Orb |
+| **响应组合 · NEW** | 默认展示两套新 Orb + 文字；另有 Clear / Aurora / Glass 经典组合 |
 | **动效实验室** | 调整五色色标、单色模式、尺寸、速度、密度与光标；复制当前 React 代码 |
 | **业务场景** | 体验知识检索、工业选型、报价协同中的阶段切换与流式输出 |
 | **接入与保障** | 了解组件边界、设计体系适配、无障碍行为与安全责任 |
@@ -45,9 +45,37 @@
 
 ![实时参数工作台：粒子、状态与流式光标](https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/playground.png)
 
-## 三套响应组合
+## 全新 Orb 与配套文字
 
-**不止一颗 Orb，而是一整段有节奏的回应。** 新增的 `ResponseExperience` 把思考状态、文字显现、光标和完成收尾组合起来。默认 Clear；原有独立组件保持兼容。启动展厅后打开 [响应组合](http://127.0.0.1:5188/#collections)，点击「同步体验三套」，用同一段文字直接比较。
+**这次变化发生在 Orb 本身，而不是背景。** v0.4.0 增加两个独立 Canvas 绘制器，不调用原来的五种粒子几何，也不加载图片或付费 shader。
+
+| 新形态 | Orb 本身 | 配套文字 / 光标 |
+| --- | --- | --- |
+| **Bloom** | 连续彩色曲面、呼吸轮廓、内部膜状折光；Fluent / Copilot-inspired 的柔和方向 | `resolve`：文字从雾感消散至清晰；`prism`：流彩水滴光标 |
+| **Filament** | 有前后遮挡层次的连续光丝，带沿线游走的亮点；原创、通透的空间感 | `ink`：短暂亮起的墨迹；`nib`：倾斜光丝笔尖 |
+
+展厅默认打开这两个新形态：大尺寸 Orb 与实际行内状态并排展示，同步播放同一段回答，既看形态也看阅读感受。旧五种 Orb 和上一轮三组搭配全部保留在独立组中。视觉方向参考 [Fluent 动效原则](https://fluent2.microsoft.design/motion)，不是 Microsoft / Copilot 的官方实现或逐像素复刻。
+
+```tsx
+import { ThinkingOrb, ResponseExperience } from '@guidoshar/chat-motion-react';
+import '@guidoshar/chat-motion-react/styles.css';
+
+// 单独一颗全新 Orb：
+<ThinkingOrb variant="bloom" size={96} />
+<ThinkingOrb variant="filament" size={96} />
+
+// 或直接使用对应的完整响应组合：
+<ResponseExperience preset="bloom" text={text} phase="streaming" />
+<ResponseExperience preset="filament" text={text} phase="streaming" />
+```
+
+新形态继续支持品牌色、单色、尺寸、速度、暂停及主题 token。`density` 对 Bloom 控制膜层数，对 Filament 控制光丝数量；`dotScale` 对新形态控制边缘／线条粗细。它们不再是“点的密度和大小”。光丝最多 12 条，每条最多 97 个采样顶点；膜层最多 7 层。
+
+两套都不带背景面板。`resolve` 默认 740ms，`ink` 默认 480ms，可用 `glyphFadeMs` 修改。库仍即时呈现已收到的正文，不为了动效排队或假装思考。低动态／高对比度设置和隐藏页面暂停仍然有效。
+
+## 现有 Orb 的三套组合
+
+v0.3.0 的 Clear / Aurora / Glass 是基于原有 Orb 的搭配，不是新的球体几何。为了保持兼容，`ResponseExperience` 默认仍为 Clear；可显式选择新的 `bloom` / `filament`。在 [响应组合](http://127.0.0.1:5188/#collections) 的「现有 Orb 的组合」中可继续体验这三套。
 
 | 组合 | 思考时 | 输出时 | 完成时 | 适合的界面 |
 | --- | --- | --- | --- | --- |
@@ -66,7 +94,7 @@ import '@guidoshar/chat-motion-react/styles.css';
 export function Reply({ text, phase }: { text: string; phase: ResponsePhase }) {
   return (
     <ResponseExperience
-      preset="clear" // clear | aurora | glass
+      preset="clear" // clear | aurora | glass | bloom | filament
       text={text}
       phase={phase}
       tokens={{ glyphFadeMs: 620, glassBlur: 14, sheenDurationMs: 3200 }}
@@ -84,8 +112,8 @@ export function Reply({ text, phase }: { text: string; phase: ResponsePhase }) {
 
 ```tsx
 <StreamingText text={text} phase="writing" reveal="soft" cursor="beam" />
-// reveal: fade | soft | blur | none
-// cursor: spectrum | beam | dot | line | none
+// reveal: fade | soft | blur | resolve | ink | none
+// cursor: spectrum | beam | dot | line | prism | nib | none
 ```
 
 Clear 默认渐显 620ms，Aurora 540ms，Glass 320ms；`glyphFadeMs` 可覆盖。减少动态效果时取消渐显、模糊与高光动画；不支持背景模糊或开启减少透明效果时，Glass 使用实色回退。深色界面请使用 `darkTokens` 或设置自己的深色表面 token。
@@ -107,7 +135,7 @@ Clear 默认渐显 620ms，Aurora 540ms，Glass 320ms；`glyphFadeMs` 可覆盖�
 ## 为什么选择它
 
 - **给产品团队：** 用统一的视觉语言表达“正在处理、已完成、暂时中断、等待开始”，而不是在每个页面重新设计状态。
-- **给设计团队：** 无外框优先、品牌高光克制，五种动作有不同节奏。
+- **给设计团队：** 无外框优先、品牌高光克制；曲面、光丝和粒子有不同的形态与节奏。
 - **给工程团队：** 两个核心呈现组件、类型化 token、ESM 与 CSS 独立入口。复用已有 SSE、状态机和 UI 框架。
 - **给安全与维护团队：** 无遥测、无凭据读取、无远程运行时素材；许可来源、发布包范围和宿主责任明确公开。
 
@@ -115,27 +143,29 @@ Clear 默认渐显 620ms，Aurora 540ms，Glass 320ms；`glyphFadeMs` 可覆盖�
 
 ## 包含什么
 
-- `ThinkingOrb`：`solving`、`composing`、`ping`、`band`、`ribbon` 五种粒子动画。
+- `ThinkingOrb`：`bloom`、`filament` 两种曲面／光丝动画，以及 `solving`、`composing`、`ping`、`band`、`ribbon` 五种粒子动画。
 - `StreamingText`：随已收到的文本更新，末尾渐显、彩色流动光标、完成淡出。
 - `StatusPill`：`ThinkingOrb` 的可选文字状态组合，默认无边框；不是额外聊天业务模块。
-- `ResponseExperience`：Clear / Aurora / Glass 三套配套响应；`responsePresets` 导出各组的 Orb、文字与光标映射。
+- `ResponseExperience`：Bloom / Filament / Clear / Aurora / Glass 五套配套响应；`responsePresets` 导出各组的 Orb、文字与光标映射。
 - `MotionTheme` / `motionTokens`：共享设计 token，可局部覆盖，不强制使用 Provider。
-- 本地组件展厅：五种动效、品牌参数工作台、可复制代码、三种业务模拟与完成／中断／空闲状态。
+- 本地组件展厅：七种动效、五套组合、品牌参数工作台、可复制代码、三种业务模拟与完成／中断／空闲状态。
 - 可接真实服务的 [SSE 示例](examples/SseReply.tsx)。
 
 这是从应用内 UI 模块独立整理出的新包，不包含原应用后端、业务规则、登录代码、数据、logo 或人物头像。原应用没有被自动切换为依赖此包。
 
-### 五种动作
+### 七种形态
 
 | variant | 视觉行为 | 用途示例，不绑定业务含义 |
 | --- | --- | --- |
+| `bloom` | 连续曲面、变形轮廓与内部折光，不使用点阵 | 柔和的对话助手 |
+| `filament` | 三维投影的连续光丝与沿线流光，不使用粒子球 | 轻盈的思考／编排状态 |
 | `solving` | 球面点阵分层四分之一转，打乱、逆序复位，再短暂停顿 | 理解需求、求解 |
 | `composing` | 保持球体朝向，宽点阵带起伏流动，带淡淡的球壳 | 整理思路、组织回答 |
 | `ping` | 光环沿球面去往对侧，再原路返回；1× 时 4.2 秒一轮 | 扫描、检索 |
 | `band` | 球面旋转光带；保留原 API | 通用处理 |
 | `ribbon` | 旋转的螺旋粒子带；保留原 API | 持续生成 |
 
-前两种参考 Libraries.dev 的前两个展示并改编其 MIT 几何实现；`ping` 根据 MetalForge 公开视觉说明独立实现。并非官方组件或逐像素复刻。新三种默认用克制底色加品牌高光；`colorMode="mono"` 可切换纯单色。
+`solving` / `composing` 参考 Libraries.dev 的前两个展示并改编其 MIT 几何实现；`ping` 根据 MetalForge 公开视觉说明独立实现。`bloom` / `filament` 为独立编写的连续曲面与光丝绘制。均非官方组件或逐像素复刻；`colorMode="mono"` 可切换纯单色。
 
 ## 本地启动
 
@@ -164,29 +194,29 @@ npm pack            # 生成可安装的 .tgz
 
 ### 从 GitHub 安装
 
-推荐下载 [v0.3.0 Release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.3.0) 中预构建的 `.tgz`，核对 release 的 SHA-256 后安装。此路径不需要在消费端运行构建脚本：
+推荐下载 [v0.4.0 Release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.4.0) 中预构建的 `.tgz`，核对 release 的 SHA-256 后安装。此路径不需要在消费端运行构建脚本：
 
 ```powershell
-Get-FileHash ./guidoshar-chat-motion-react-0.3.0.tgz -Algorithm SHA256
-npm install ./guidoshar-chat-motion-react-0.3.0.tgz --ignore-scripts
+Get-FileHash ./guidoshar-chat-motion-react-0.4.0.tgz -Algorithm SHA256
+npm install ./guidoshar-chat-motion-react-0.4.0.tgz --ignore-scripts
 ```
 
 需要直接从源码安装时：
 
 ```powershell
-npm install "git+ssh://git@github.com/guidoshar/chat-motion-react.git#v0.3.0"
+npm install "git+ssh://git@github.com/guidoshar/chat-motion-react.git#v0.4.0"
 ```
 
 也可用 HTTPS（不要求配置 SSH key）：
 
 ```powershell
-npm install "git+https://github.com/guidoshar/chat-motion-react.git#v0.3.0"
+npm install "git+https://github.com/guidoshar/chat-motion-react.git#v0.4.0"
 ```
 
 Git 安装时 `prepare` 会构建 `dist`，需要允许 npm lifecycle scripts。生产项目请固定 tag 或 commit，不跟随浮动分支。如果组织禁用安装脚本，先在源码目录 `npm ci` / `npm pack`，再安装生成的文件：
 
 ```powershell
-npm install ./guidoshar-chat-motion-react-0.3.0.tgz --ignore-scripts
+npm install ./guidoshar-chat-motion-react-0.4.0.tgz --ignore-scripts
 ```
 
 ### 最小用法
@@ -400,7 +430,7 @@ MIT，见 [LICENSE](LICENSE)；Libraries.dev 改编部分的原作者完整 MIT 
 
 ## 发布质量边界
 
-v0.3.0 完成 TypeScript／组件包／演示构建与静态发布内容检查；本轮未运行测试或浏览器检查，新增三套响应组合仍需在宿主页面中做视觉与交互验收。
+v0.4.0 完成 TypeScript／组件包／演示构建与静态发布内容检查；本轮未运行测试或浏览器检查，新增曲面、光丝和配套文字仍需在宿主页面中做视觉与交互验收。
 
 文档图片保留 v0.2.1 的本地桌面 Chrome 截图；该版本曾修复 JSX runtime 导致的 `React is not defined` 白屏并完成针对性演示交互检查。旧截图不是新组合的验证证据。
 

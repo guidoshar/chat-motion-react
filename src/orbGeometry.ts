@@ -1,6 +1,8 @@
 import { spectrumPalette, type MotionPalette } from './tokens.js';
 
-export type OrbVariant = 'band' | 'ping' | 'ribbon' | 'solving' | 'composing';
+export type ParticleOrbVariant = 'band' | 'ping' | 'ribbon' | 'solving' | 'composing';
+export type SculpturalOrbVariant = 'bloom' | 'filament';
+export type OrbVariant = ParticleOrbVariant | SculpturalOrbVariant;
 export type OrbColorMode = 'brand' | 'mono';
 type Point = { x: number; y: number; z: number };
 type Particle = Point & { light: number; color: number; weight: number; emphasis: number };
@@ -10,7 +12,7 @@ const TAU = Math.PI * 2;
 const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 const finite = (value: number | undefined, fallback: number) => typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 
-export const orbVariants: readonly OrbVariant[] = Object.freeze(['solving', 'composing', 'ping', 'band', 'ribbon']);
+export const orbVariants: readonly OrbVariant[] = Object.freeze(['solving', 'composing', 'ping', 'band', 'ribbon', 'bloom', 'filament']);
 
 function spherePoints(count: number): Point[] {
   return Array.from({ length: count }, (_, index) => {
@@ -175,7 +177,7 @@ function legacy(variant: 'band' | 'ribbon', mesh: Mesh, seconds: number): Partic
 }
 
 /** CPU-only deterministic geometry, bounded counts and screen-relative dot sizes. */
-export function orbFrame(variant: OrbVariant, seconds: number, options: OrbFrameOptions = {}): OrbDot[] {
+export function orbFrame(variant: ParticleOrbVariant, seconds: number, options: OrbFrameOptions = {}): OrbDot[] {
   const size = clamp(finite(options.size, 64), 16, 192);
   const mesh = meshFor(size, finite(options.density, 1));
   const time = Math.max(0, finite(seconds, 0));

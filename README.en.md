@@ -30,8 +30,8 @@ copyable React code, and three clearly labeled business simulations.
 
 | Explore | What you can do |
 | --- | --- |
-| All five orbs | Compare solving, composing, ping, band and ribbon side by side |
-| Response collections · NEW | Compare Clear, Aurora and Glass using synchronized output and copyable code |
+| All seven orbs | Compare new Bloom / Filament and the five original particle variants |
+| Response collections · NEW | New Bloom / Filament pairs first; previous three combinations in their own group |
 | Your brand | Edit colors, size, speed, density, dot scale and cursor width |
 | Real context | Simulate progress stages, streamed content, completion and stop |
 | Integration | Review APIs, licensing, accessibility behavior and security scope |
@@ -46,6 +46,39 @@ copyable React code, and three clearly labeled business simulations.
 ![Design-token playground](https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/playground.png)
 
 ## Response collections
+
+### New in v0.4: new shapes, not new backgrounds
+
+**Bloom** is a continuous, breathing chromatic surface with moving internal
+folds and highlights. **Filament** is a set of projected three-dimensional
+light strands, with front/back depth and glints travelling along the curves.
+Both are independent Canvas renderers: neither reuses the five particle
+geometries, wraps an old orb in a glow, nor uses images or paid shaders.
+
+| New preset | New orb | Paired text / cursor |
+| --- | --- | --- |
+| `bloom` | Continuous folded surface, Fluent/Copilot-inspired mood | `resolve` mist-to-clear reveal / `prism` liquid cursor |
+| `filament` | Continuous woven light paths; an original airy direction | `ink` illuminated-ink reveal / `nib` fine slanted tip |
+
+```tsx
+<ThinkingOrb variant="bloom" size={96} />
+<ThinkingOrb variant="filament" size={96} />
+<ResponseExperience preset="bloom" text={text} phase="streaming" />
+<ResponseExperience preset="filament" text={text} phase="streaming" />
+```
+
+The showroom defaults to these two new shapes on plain surfaces, with both
+large specimens and inline response examples. The original three compositions
+are retained in a separate group. These are not official Microsoft components
+or pixel-identical Copilot reproductions.
+
+The new orbs share palette, mono mode, speed, size and pause behavior.
+`density` controls fold/strand count; `dotScale` controls edge/line weight.
+Bounds: at most 7 folds, or 12 strands with 97 sampled vertices each.
+Reveal defaults: resolve 740ms / ink 480ms, overridden by `glyphFadeMs`.
+Reduced motion disables animated treatments without hiding the text.
+
+### Existing-orb compositions
 
 **Not just an orb: a coordinated response from thought to completion.**
 `ResponseExperience` composes existing primitives, with three opt-in treatments.
@@ -90,8 +123,8 @@ Or mix the text treatments into your existing UI:
 
 ```tsx
 <StreamingText text={text} phase="writing" reveal="soft" cursor="beam" />
-// reveal: fade | soft | blur | none
-// cursor: spectrum | beam | dot | line | none
+// reveal: fade | soft | blur | resolve | ink | none
+// cursor: spectrum | beam | dot | line | prism | nib | none
 ```
 
 Default fades are 620ms for Clear, 540ms for Aurora and 320ms for Glass.
@@ -100,7 +133,7 @@ reduced transparency or missing backdrop-filter support gives Glass an opaque
 fallback. Apply `darkTokens` or your own dark surface tokens in dark interfaces.
 
 Documentation images remain actual **v0.2.1 captures**; they do not show or
-validate the new v0.3.0 collections. View those in the local showroom.
+validate the v0.3/v0.4 additions. View those in the local showroom.
 
 ## Business context
 
@@ -126,19 +159,19 @@ boundaries, without claiming enterprise certification.
 ## Install
 
 This project is published on GitHub, **not on the npm registry**. Download the
-prebuilt `guidoshar-chat-motion-react-0.3.0.tgz` from the
-[v0.3.0 release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.3.0),
+prebuilt `guidoshar-chat-motion-react-0.4.0.tgz` from the
+[v0.4.0 release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.4.0),
 compare its SHA-256 with the release, then install:
 
 ```powershell
-Get-FileHash ./guidoshar-chat-motion-react-0.3.0.tgz -Algorithm SHA256
-npm install ./guidoshar-chat-motion-react-0.3.0.tgz --ignore-scripts
+Get-FileHash ./guidoshar-chat-motion-react-0.4.0.tgz -Algorithm SHA256
+npm install ./guidoshar-chat-motion-react-0.4.0.tgz --ignore-scripts
 ```
 
 Or install from a pinned Git tag (requires the npm `prepare` build script):
 
 ```powershell
-npm install "git+https://github.com/guidoshar/chat-motion-react.git#v0.3.0"
+npm install "git+https://github.com/guidoshar/chat-motion-react.git#v0.4.0"
 ```
 
 ESM only. React 18.2 or 19 is a peer dependency. Package tooling requires Node
@@ -189,6 +222,8 @@ history and a new `key={messageId}` for each new response.
 
 | Variant | Motion |
 | --- | --- |
+| `bloom` | Continuous morphing surface with internal chromatic folds |
+| `filament` | Depth-projected light strands with travelling glints |
 | `solving` | Layered dot lattice: quarter-turn scramble, reverse, rest |
 | `composing` | Fixed-orientation broad dot ribbon with traveling undulations |
 | `ping` | Spherical light ring, out and back in 4.2 seconds at 1× speed |
@@ -257,8 +292,8 @@ CSS sanitizer**. Treat props/style/theme objects as trusted configuration.
   appearance plain/soft; announce; variant/speed/paused/colorMode/density/
   dotScale/palette. Default icon sizes: 28/36/56px.
 - `StreamingText`: required text; phase writing/settled/idle; paused;
-  reveal fade/soft/blur/none; cursor spectrum/beam/dot/line/none.
-- `ResponseExperience`: required text; preset clear/aurora/glass (default clear);
+  reveal fade/soft/blur/resolve/ink/none; cursor spectrum/beam/dot/line/prism/nib/none.
+- `ResponseExperience`: required text; preset clear/aurora/glass/bloom/filament (default clear);
   phase thinking/streaming/complete/error/idle (default thinking); label, detail,
   paused and announce (both false by default). Default status icon/label: 32/13px.
 - `responsePresets` exports each preset's orb, color mode, reveal and cursor
@@ -338,7 +373,7 @@ project-local Playwright and an isolated headless browser to regenerate the
 documentation screenshots. It does not use your browser profile or run in CI.
 Documentation images live in the repository, not in the runtime package.
 
-v0.3.0 verification covers TypeScript/package/demo builds and static package
+v0.4.0 verification covers TypeScript/package/demo builds and static package
 inventory checks only. No new runtime tests, screenshots or browser checks were
 run for this release; validate the new treatments in your host environment.
 The retained v0.2.1 screenshots came from a focused desktop Chrome check after
