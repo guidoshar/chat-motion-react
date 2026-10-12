@@ -6,7 +6,7 @@ import { StatusPill, StreamingText } from '@guidoshar/chat-motion-react';
 
 /** Native EventSource example. See README for the exact event contract and limitations. */
 export function SseReply({ url = '/api/chat/stream' }: { url?: string }) {
-  const connection = useRef<EventSource | null>(null);
+  const disconnect = useRef<(() => void) | null>(null);
   const [run, setRun] = useState(0);
   const [text, setText] = useState('');
   const [stage, setStage] = useState('等待开始');
@@ -17,28 +17,48 @@ export function SseReply({ url = '/api/chat/stream' }: { url?: string }) {
   useEffect(() => {
     if (!run) return;
     setText(''); setError(''); setStage('正在连接'); setBusy(true); setPhase('idle');
-    const stream = new EventSource(url);
-    connection.current = stream;
+    let stream: EventSource;
+    try {
+      const target = new URL(url, window.location.href);
+      if (target.origin !== window.location.origin || !['http:', 'https:'].includes(target.protocol) || target.username || target.password) throw new Error('Same-origin endpoint required');
+      stream = new EventSource(target.href);
+    } catch {
+      setBusy(false); setStage('无法连接'); setError('请配置有效的同源 SSE 地址。');
+      return;
+    }
     let closed = false;
+    let received = 0;
+    let idleTimer = 0;
+    let totalTimer = 0;
     const close = () => {
       closed = true;
+      window.clearTimeout(idleTimer); window.clearTimeout(totalTimer);
       stream.close();
-      if (connection.current === stream) connection.current = null;
+      if (disconnect.current === close) disconnect.current = null;
     };
+    disconnect.current = close;
     const fail = (message: string) => {
       if (closed) return;
       close(); setBusy(false); setPhase('idle'); setStage('生成中断'); setError(message);
     };
     const payload = (event: MessageEvent): Record<string, unknown> => {
+      if (typeof event.data !== 'string' || event.data.length > 65536) throw new Error('Event too large');
       const value: unknown = JSON.parse(event.data);
       if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Invalid event');
       return value as Record<string, unknown>;
     };
+    const heartbeat = () => {
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => fail('等待响应超时，请重试。'), 45000);
+    };
+    heartbeat();
+    totalTimer = window.setTimeout(() => fail('生成超过时间限制，请重试。'), 300000);
     stream.addEventListener('stage', event => {
       if (closed) return;
       try {
         const data = payload(event);
-        if (typeof data.label !== 'string') throw new Error('Missing label');
+        if (typeof data.label !== 'string' || data.label.length > 160) throw new Error('Invalid label');
+        heartbeat();
         setStage(data.label);
       } catch { fail('阶段消息格式不正确。'); }
     });
@@ -48,6 +68,9 @@ export function SseReply({ url = '/api/chat/stream' }: { url?: string }) {
         const data = payload(event);
         if (typeof data.text !== 'string') throw new Error('Missing text');
         const delta = data.text;
+        if (received + delta.length > 200000) { fail('回复超过示例的长度限制。'); return; }
+        received += delta.length;
+        heartbeat();
         setPhase('writing'); setText(previous => previous + delta);
       } catch { fail('文本消息格式不正确。'); }
     });
@@ -62,7 +85,7 @@ export function SseReply({ url = '/api/chat/stream' }: { url?: string }) {
   }, [url, run]);
 
   const cancel = () => {
-    connection.current?.close(); connection.current = null;
+    disconnect.current?.();
     setBusy(false); setPhase('idle'); setStage('已停止');
   };
   return <section>

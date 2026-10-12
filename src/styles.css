@@ -7,7 +7,8 @@
   vertical-align: middle;
   pointer-events: none;
 }
-.cm-orb > canvas { display: block; width: 100%; height: 100%; }
+.cm-orb > canvas { display: block; width: 100%; height: 100%; animation: cm-orb-arrive 420ms ease-out both; }
+.cm-orb[data-motion-paused="true"] > canvas { animation: none; }
 .cm-status {
   --_cm-orb-size: 36px;
   --_cm-label-size: 12px;
@@ -72,7 +73,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: var(--cm-cursor-gap, 4px);
+  inset-inline-start: var(--cm-cursor-gap, 4px);
   width: var(--cm-cursor-width, 3px);
   border-radius: var(--cm-cursor-width, 3px);
   background: linear-gradient(180deg, var(--cm-cyan, #21a8bd) 0%, var(--cm-blue, #1775b9) 26%, var(--cm-violet, #76518c) 45%, var(--cm-red, #db3b49) 62%, var(--cm-orange, #f28b2c) 78%, var(--cm-cyan, #21a8bd) 100%);
@@ -82,7 +83,7 @@
 .cm-stream-caret::after {
   content: '';
   position: absolute;
-  left: calc(var(--cm-cursor-gap, 4px) - 3px);
+  inset-inline-start: calc(var(--cm-cursor-gap, 4px) - 3px);
   bottom: 1px;
   width: calc(var(--cm-cursor-width, 3px) + 6px);
   height: 1px;
@@ -92,7 +93,7 @@
 }
 .cm-stream-caret > i {
   position: absolute;
-  left: calc(var(--cm-cursor-gap, 4px) + var(--cm-cursor-width, 3px) + 2px);
+  inset-inline-start: calc(var(--cm-cursor-gap, 4px) + var(--cm-cursor-width, 3px) + 2px);
   top: 2px;
   width: 2px;
   height: 2px;
@@ -108,6 +109,7 @@
 .cm-stream[data-motion-paused="true"] .cm-stream-caret > i { animation-play-state: paused; }
 .cm-stream[data-motion-paused="true"][data-phase="settled"] .cm-stream-caret { animation: none; opacity: 0; }
 @keyframes cm-ink-arrive { from { opacity: .32; } to { opacity: 1; } }
+@keyframes cm-orb-arrive { from { opacity: .25; } to { opacity: 1; } }
 @keyframes cm-label-arrive { from { opacity: .35; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes cm-tip-breathe { 0%, 100% { opacity: 1; transform: scaleY(1); } 50% { opacity: .65; transform: scaleY(.88); } }
 @keyframes cm-ribbon-flow { 0%, 100% { background-position: 50% 0%; } 50% { background-position: 50% 100%; } }
@@ -115,6 +117,13 @@
 @keyframes cm-tip-settle { from { opacity: .85; transform: scaleY(1); } to { opacity: 0; transform: scaleY(.35); } }
 @media (prefers-reduced-motion: reduce) {
   .cm-status { transition: none; }
-  .cm-status-copy, .cm-stream *, .cm-stream *::before, .cm-stream *::after { animation: none !important; }
+  .cm-orb > canvas, .cm-status-copy, .cm-stream *, .cm-stream *::before, .cm-stream *::after { animation: none !important; }
   .cm-stream[data-phase="settled"] .cm-stream-caret { opacity: 0; }
+}
+@media (forced-colors: active) {
+  .cm-orb { position: relative; }
+  .cm-orb > canvas { visibility: hidden; }
+  .cm-orb::after { content: ''; position: absolute; inset: 24%; border: 2px dotted CanvasText; border-radius: 50%; }
+  .cm-stream-caret::before { background: CanvasText; animation: none; }
+  .cm-stream-caret::after, .cm-stream-caret > i { display: none; }
 }

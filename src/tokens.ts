@@ -12,6 +12,8 @@ export interface MotionTokens {
   violet?: string;
   red?: string;
   orange?: string;
+  /** Neutral particle ink in six-digit HEX; defaults to the surrounding text color. */
+  orbInk?: string;
   textColor?: string;
   mutedColor?: string;
   surfaceColor?: string;
@@ -20,6 +22,9 @@ export interface MotionTokens {
   errorColor?: string;
   orbSize?: number;
   speed?: number;
+  /** Bounded multipliers, not absolute particle counts. */
+  density?: number;
+  dotScale?: number;
   labelSize?: number;
   gap?: number;
   pillRadius?: number;
@@ -34,10 +39,12 @@ export interface MotionTokens {
 const tokenMap = {
   cyan: ['--cm-cyan', ''], blue: ['--cm-blue', ''], violet: ['--cm-violet', ''],
   red: ['--cm-red', ''], orange: ['--cm-orange', ''],
+  orbInk: ['--cm-orb-ink', ''],
   textColor: ['--cm-text', ''], mutedColor: ['--cm-muted', ''],
   surfaceColor: ['--cm-surface', ''], borderColor: ['--cm-border', ''],
   successColor: ['--cm-success', ''], errorColor: ['--cm-error', ''],
   orbSize: ['--cm-orb-size', 'px'], speed: ['--cm-speed', ''],
+  density: ['--cm-density', ''], dotScale: ['--cm-dot-scale', ''],
   labelSize: ['--cm-label-size', 'px'], gap: ['--cm-gap', 'px'],
   pillRadius: ['--cm-pill-radius', 'px'], cursorWidth: ['--cm-cursor-width', 'px'],
   cursorHeight: ['--cm-cursor-height', ''], cursorGap: ['--cm-cursor-gap', 'px'],
@@ -45,12 +52,29 @@ const tokenMap = {
   cursorSettleMs: ['--cm-cursor-settle', 'ms'],
 } as const satisfies Record<keyof MotionTokens, readonly [string, string]>;
 
+const bounds: Partial<Record<keyof MotionTokens, readonly [number, number]>> = {
+  orbSize: [16, 192], speed: [0, 3], density: [.5, 1.5], dotScale: [.5, 2],
+  labelSize: [8, 48], gap: [0, 48], pillRadius: [0, 999],
+  cursorWidth: [1, 8], cursorGap: [0, 24], glyphFadeMs: [0, 2000],
+  cursorCycleMs: [500, 10000], cursorSettleMs: [0, 2000],
+};
+
 /** Usable on any host element, without a provider or a runtime theme dependency. */
 export function motionTokens(tokens: MotionTokens = {}): MotionStyle {
   const style: Record<string, string> = {};
+  if (!tokens || typeof tokens !== 'object' || Array.isArray(tokens)) return style;
   for (const key of Object.keys(tokens) as (keyof MotionTokens)[]) {
-    const value = tokens[key];
-    if (value === undefined || (typeof value === 'number' && !Number.isFinite(value))) continue;
+    if (!Object.hasOwn(tokenMap, key)) continue;
+    let value = tokens[key];
+    const range = bounds[key];
+    if (range) {
+      if (typeof value !== 'number' || !Number.isFinite(value)) continue;
+      value = Math.max(range[0], Math.min(range[1], value));
+    } else {
+      if (typeof value !== 'string' || value.length > 128 || /url\s*\(|expression\s*\(|@import|[;{}<>]/i.test(value)) continue;
+      if (['cyan', 'blue', 'violet', 'red', 'orange', 'orbInk'].includes(key) && !/^#[\da-f]{6}$/i.test(value)) continue;
+      if (key === 'cursorHeight' && !/^(?:\d+|\d*\.\d+)(?:px|em|rem|%)$/.test(value)) continue;
+    }
     const [property, unit] = tokenMap[key];
     style[property] = `${value}${typeof value === 'number' ? unit : ''}`;
   }
@@ -58,6 +82,7 @@ export function motionTokens(tokens: MotionTokens = {}): MotionStyle {
 }
 
 export const darkTokens = {
+  orbInk: '#D3DCE7',
   textColor: '#D3E6F6', mutedColor: '#A2B6C8', surfaceColor: '#182635',
   borderColor: '#2B4055', successColor: '#78C7B3', errorColor: '#F5A0A8',
 } satisfies MotionTokens;

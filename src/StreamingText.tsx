@@ -27,16 +27,29 @@ export function StreamingText({ text, phase = 'writing', paused = false, tokens,
     document.addEventListener('visibilitychange', sync);
     return () => document.removeEventListener('visibilitychange', sync);
   }, []);
-  const { prefix, tail, start } = useMemo(() => {
-    if (phase !== 'writing') return { prefix: text, tail: [] as string[], start: 0 };
-    const glyphs = segmenter ? Array.from(segmenter.segment(text), part => part.segment) : Array.from(text);
+  const { prefix, tail } = useMemo(() => {
+    if (phase !== 'writing') return { prefix: text, tail: [] as { glyph: string; offset: number }[] };
+    // Segment only the trailing window; keep absolute UTF-16 keys so incoming
+    // deltas do not replay animations on existing text. Never truncate the reply.
+    let boundary = Math.max(0, text.length - 2048);
+    if (segmenter) boundary = segmenter.segment(text).containing(boundary)?.index ?? 0;
+    else if (boundary > 0 && /[\uDC00-\uDFFF]/.test(text[boundary])) boundary--;
+    const suffix = text.slice(boundary);
+    const glyphs = segmenter ? Array.from(segmenter.segment(suffix), part => part.segment) : Array.from(suffix);
     const start = Math.max(0, glyphs.length - 24);
-    return { prefix: glyphs.slice(0, start).join(''), tail: glyphs.slice(start), start };
+    const prefix = text.slice(0, boundary) + glyphs.slice(0, start).join('');
+    let offset = prefix.length;
+    const tail = glyphs.slice(start).map(glyph => {
+      const entry = { glyph, offset };
+      offset += glyph.length;
+      return entry;
+    });
+    return { prefix, tail };
   }, [text, phase]);
 
   return <span className={`cm-stream ${className}`} data-phase={phase} data-motion-paused={paused || hidden}
     style={{ ...motionTokens(tokens), ...style }}>
-    {prefix}{tail.map((glyph, index) => <span className="cm-stream-glyph" key={`${start + index}:${glyph}`}>{glyph}</span>)}
+    {prefix}{tail.map(({ glyph, offset }) => <span className="cm-stream-glyph" key={`${offset}:${glyph}`}>{glyph}</span>)}
     {phase !== 'idle' && <span className="cm-stream-caret" aria-hidden="true"><i/></span>}
   </span>;
 }
