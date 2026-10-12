@@ -1,12 +1,69 @@
-# Chat Motion React
+<div align="center">
+  <img src="https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/wordmark.svg" width="340" alt="Chat Motion React" />
+  <h1>让每一步等待，都有清晰的回应。</h1>
+  <p><strong>Thinking orbs & streaming text, built to fit your brand.</strong></p>
+  <p>五种思考动效 · 流式文字与品牌色光标 · 可组合的进展反馈</p>
+  <p><code>React + TypeScript</code> · <code>Canvas 2D + CSS</code> · <code>MIT</code> · <code>无遥测</code></p>
+  <p><a href="#组件展厅">看效果</a> · <a href="#业务中的用法">看场景</a> · <a href="#在其他-react-项目安装">开始接入</a> · <a href="README.en.md">English</a></p>
+</div>
 
-[English guide](README.en.md) · [Changelog](CHANGELOG.md) · [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md)
+[![Build and package](https://github.com/guidoshar/chat-motion-react/actions/workflows/build.yml/badge.svg)](https://github.com/guidoshar/chat-motion-react/actions/workflows/build.yml)
 
-Two reusable UI pieces for AI chat: **thinking-state animation** and **streaming text with a multicolor cursor**. React + TypeScript, Canvas 2D + CSS. No HeroUI, Tailwind, Three.js, remote assets or model SDK required.
+![Chat Motion 浅色组件展厅：五种 Orb 与流式光标](https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/gallery-light.png)
 
-两个可独立使用的组件：**思考状态动画**与 **SSE 流式文字／光标**。默认不加外框，保留粒子运动、文字渐显、彩色光标和完成收尾。
+**不是再加一个 loading，而是让用户理解当前进展。**
+当 AI 产品在理解问题、检索资料或组织回答时，Chat Motion 提供一致、克制、可定制的视觉反馈。你保留已有的模型、SSE 和业务流程；我们提供可以单独使用的思考动画、状态文字和流式光标。
+
+无需 HeroUI、Tailwind、Three.js 或模型 SDK。默认无外框，不强制字体，不接管页面布局。
 
 > 这里的 token 是颜色、尺寸、动效等 **设计 token**，不是 API 密钥。组件不请求模型、不读取凭据，也不生成或伪造后端处理阶段。
+
+## 组件展厅
+
+仓库内置完整的桌面展示页，启动后访问 **http://127.0.0.1:5188**。不是静态效果图：五种 Orb 都在运行，可切换主题、调整参数并体验示例流程。没有公开托管的在线 Demo。
+
+| 展区 | 可以做什么 |
+| --- | --- |
+| **组件总览** | 同屏比较 Solving / Composing / Ping / Band / Ribbon |
+| **动效实验室** | 调整五色色标、单色模式、尺寸、速度、密度与光标；复制当前 React 代码 |
+| **业务场景** | 体验知识检索、工业选型、报价协同中的阶段切换与流式输出 |
+| **接入与保障** | 了解组件边界、设计体系适配、无障碍行为与安全责任 |
+
+<details>
+<summary><strong>查看深色模式</strong></summary>
+
+![Chat Motion 深色展厅](https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/gallery-dark.png)
+
+</details>
+
+### Make it yours.
+
+把颜色与节奏交给设计 token，不必复制组件再修改源码。支持默认多彩、Ocean、Iris 和自定义色板；业务中的状态文案仍由你的应用决定。
+
+![实时参数工作台：粒子、状态与流式光标](https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/playground.png)
+
+## 业务中的用法
+
+组件关注的是**人与系统之间的反馈**，不是替你决定业务流程。下面这些场景展示接入方式，并不宣称此仓库具备对应的后端能力。
+
+| 场景 | 展示给用户的进展 | 适合采用的组件 | 你的系统负责 |
+| --- | --- | --- | --- |
+| 企业知识检索 | 理解问题 → 检索资料 → 整理回答 | Solving → Ping → Composing + StreamingText | 检索、来源引用、访问权限 |
+| 工业选型 | 识别工况 → 核对参数 → 返回建议 | StatusPill + Orb + 流式确认清单 | 产品数据、规则引擎、兼容性校核 |
+| 报价协同 | 整理规格 → 交接报价 → 输出摘要 | 分阶段状态 + 品牌色光标 | 正式价格、税费、审批与商业承诺 |
+
+![工业选型示例：对话、阶段与完成结果](https://raw.githubusercontent.com/guidoshar/chat-motion-react/v0.2.1/docs/media/business-flow.png)
+
+> 上图是实际运行的本地页面截图，内容是**明确标注的前端模拟**。报价演示中的 ¥100.00 不是正式报价；组件没有连接企业知识库、产品或价格系统。公开的处理阶段不等于模型内部推理。
+
+## 为什么选择它
+
+- **给产品团队：** 用统一的视觉语言表达“正在处理、已完成、暂时中断、等待开始”，而不是在每个页面重新设计状态。
+- **给设计团队：** 无外框优先、品牌高光克制，五种动作有不同节奏。
+- **给工程团队：** 两个核心呈现组件、类型化 token、ESM 与 CSS 独立入口。复用已有 SSE、状态机和 UI 框架。
+- **给安全与维护团队：** 无遥测、无凭据读取、无远程运行时素材；许可来源、发布包范围和宿主责任明确公开。
+
+这是面向产品集成的设计取向，**不代表已经取得企业安全、无障碍或性能认证**。
 
 ## 包含什么
 
@@ -14,7 +71,7 @@ Two reusable UI pieces for AI chat: **thinking-state animation** and **streaming
 - `StreamingText`：随已收到的文本更新，末尾渐显、彩色流动光标、完成淡出。
 - `StatusPill`：`ThinkingOrb` 的可选文字状态组合，默认无边框；不是额外聊天业务模块。
 - `MotionTheme` / `motionTokens`：共享设计 token，可局部覆盖，不强制使用 Provider。
-- 本地交互演示：切换品牌／单色、深浅主题、尺寸、速度、粒子密度／大小、光标宽度与暂停。
+- 本地组件展厅：五种动效、品牌参数工作台、可复制代码、三种业务模拟与完成／中断／空闲状态。
 - 可接真实服务的 [SSE 示例](examples/SseReply.tsx)。
 
 这是从应用内 UI 模块独立整理出的新包，不包含原应用后端、业务规则、登录代码、数据、logo 或人物头像。原应用没有被自动切换为依赖此包。
@@ -50,35 +107,37 @@ npm run build:demo   # 类型检查并构建本地演示 → demo-dist/
 npm pack            # 生成可安装的 .tgz
 ```
 
+需要重新生成文档截图时，在已运行预览的另一终端执行 `npm run capture:docs`。这是**主动执行**的本地桌面截图流程，使用项目内 Playwright 与已安装的 Chrome 独立无头进程，不读取用户浏览器资料，不在 CI 自动执行。截图资源仅保存在仓库，不增加运行时包体积。
+
 ## 在其他 React 项目安装
 
 这是 GitHub 源码发布，**不表示已发布到 npm registry**。React 18.2 / 19 为 peer dependency，ESM 格式；不提供 CommonJS 构建。
 
 ### 从 GitHub 安装
 
-推荐下载 [v0.2.0 Release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.2.0) 中预构建的 `.tgz`，核对 release 的 SHA-256 后安装。此路径不需要在消费端运行构建脚本：
+推荐下载 [v0.2.1 Release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.2.1) 中预构建的 `.tgz`，核对 release 的 SHA-256 后安装。此路径不需要在消费端运行构建脚本：
 
 ```powershell
-Get-FileHash ./guidoshar-chat-motion-react-0.2.0.tgz -Algorithm SHA256
-npm install ./guidoshar-chat-motion-react-0.2.0.tgz --ignore-scripts
+Get-FileHash ./guidoshar-chat-motion-react-0.2.1.tgz -Algorithm SHA256
+npm install ./guidoshar-chat-motion-react-0.2.1.tgz --ignore-scripts
 ```
 
 需要直接从源码安装时：
 
 ```powershell
-npm install "git+ssh://git@github.com/guidoshar/chat-motion-react.git#v0.2.0"
+npm install "git+ssh://git@github.com/guidoshar/chat-motion-react.git#v0.2.1"
 ```
 
 也可用 HTTPS（不要求配置 SSH key）：
 
 ```powershell
-npm install "git+https://github.com/guidoshar/chat-motion-react.git#v0.2.0"
+npm install "git+https://github.com/guidoshar/chat-motion-react.git#v0.2.1"
 ```
 
 Git 安装时 `prepare` 会构建 `dist`，需要允许 npm lifecycle scripts。生产项目请固定 tag 或 commit，不跟随浮动分支。如果组织禁用安装脚本，先在源码目录 `npm ci` / `npm pack`，再安装生成的文件：
 
 ```powershell
-npm install ./guidoshar-chat-motion-react-0.2.0.tgz --ignore-scripts
+npm install ./guidoshar-chat-motion-react-0.2.1.tgz --ignore-scripts
 ```
 
 ### 最小用法
@@ -286,4 +345,10 @@ MIT，见 [LICENSE](LICENSE)；Libraries.dev 改编部分的原作者完整 MIT 
 
 ## 发布质量边界
 
-v0.2.0 做了 TypeScript／组件包／演示构建、发布内容检查与依赖审计；按项目工作约定没有运行自动化测试或浏览器检查。React 18/19 是声明的 peer 范围，不代表已完成全版本兼容性矩阵。未经过独立安全审计、WCAG 认证或企业合规认证；生产接入前请执行 [CONTRIBUTING.md](CONTRIBUTING.md) 的验收清单。
+v0.2.1 修复了演示页 JSX runtime 导致的 `React is not defined` 白屏。本次完成 TypeScript／组件包／演示构建、发布内容检查，以及本地桌面 Chrome 的截图和针对性演示交互检查。截图来自真实页面，不是设计稿。
+
+没有运行完整自动化回归或跨浏览器测试矩阵。React 18/19 是声明的 peer 范围，不代表已完成全版本兼容性验证。未经过独立安全审计、WCAG 认证或企业合规认证；生产接入前请执行 [CONTRIBUTING.md](CONTRIBUTING.md) 的验收清单。
+
+---
+
+[English guide](README.en.md) · [Changelog](CHANGELOG.md) · [Security policy](SECURITY.md) · [Contributing](CONTRIBUTING.md) · [MIT License](LICENSE)

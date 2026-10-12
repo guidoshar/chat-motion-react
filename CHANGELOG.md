@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.2.1
+
+### Fixed
+
+- Configure the automatic React JSX runtime explicitly for Vite development and
+  production. The previous demo could build but open blank with
+  `React is not defined` because Vite did not discover tsconfig.demo.json.
+
+### Added
+
+- Desktop showroom with all five orbs, design-token controls, custom palette
+  inputs, copyable React code and status/streaming examples.
+- Three clearly labeled business simulations: enterprise knowledge, industrial
+  selection and quotation handoff. No business backend or data is included.
+- Chinese/English README presentation with real light/dark, playground and
+  business-flow screenshots, product context and explicit integration boundaries.
+- Opt-in local screenshot script using a separate headless Chrome process.
+  Playwright is development-only and screenshots are excluded from the package.
+
+### Verification
+
+- Package/demo builds, publish inventory check and focused desktop Chrome
+  screenshot/interactions. No full regression or cross-browser test matrix.
+- Core component APIs and geometry are unchanged from 0.2.0.
+
 ## 0.2.0
 
 ### Added

@@ -46,5 +46,18 @@ test conventions before running them.
 - Profiling representative hardware: no guaranteed 60/120 fps is claimed.
 
 CI currently builds and checks packaging only. There is no automated runtime or
-browser test suite in this release. Add approved regression coverage before
-making wider compatibility or performance guarantees.
+browser regression suite in this release. Add approved regression coverage
+before making wider compatibility or performance guarantees.
+
+## Documentation screenshots
+
+Run `npm run dev`, then explicitly run `npm run capture:docs` in another
+terminal with Chrome installed. It uses project-local Playwright in an isolated
+headless process and only allows the local preview origin. It captures the
+light/dark showroom, token playground and one completed business demonstration,
+and reports uncaught page errors. It never attaches to a personal browser.
+CI does not run this script or install a browser.
+
+Screenshots are public, synthetic demo content; keep customer data and actual
+prices out of them. Inspect the output before committing. These focused checks
+do not replace a cross-browser or complete regression suite.
