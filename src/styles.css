@@ -1,0 +1,120 @@
+/* All defaults are fallbacks, so ancestor design tokens remain inheritable. */
+.cm-orb {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: clamp(16px, var(--cm-orb-size, var(--_cm-orb-size, 36px)), 192px);
+  height: clamp(16px, var(--cm-orb-size, var(--_cm-orb-size, 36px)), 192px);
+  vertical-align: middle;
+  pointer-events: none;
+}
+.cm-orb > canvas { display: block; width: 100%; height: 100%; }
+.cm-status {
+  --_cm-orb-size: 36px;
+  --_cm-label-size: 12px;
+  --_cm-gap: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cm-gap, var(--_cm-gap));
+  max-width: 100%;
+  min-width: 0;
+  color: var(--cm-text, #385978);
+  font-family: inherit;
+  font-size: var(--cm-label-size, var(--_cm-label-size));
+  font-weight: 500;
+  line-height: 1.6;
+  vertical-align: middle;
+  transition: border-color 200ms ease, background-color 200ms ease, color 200ms ease;
+}
+.cm-status[data-size="sm"] { --_cm-orb-size: 28px; --_cm-label-size: 11px; --_cm-gap: 3px; }
+.cm-status[data-size="lg"] { --_cm-orb-size: 56px; --_cm-label-size: 14px; --_cm-gap: 8px; }
+.cm-status[data-appearance="soft"] {
+  padding: 2px 12px 2px 3px;
+  border: 1px solid var(--cm-border, #e0e9f2);
+  border-radius: var(--cm-pill-radius, 999px);
+  background: var(--cm-surface, #f3f7fb);
+}
+.cm-status-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cm-status-copy { display: inline-block; animation: cm-label-arrive 360ms cubic-bezier(.22, 1, .36, 1) both; }
+.cm-status[data-motion-paused="true"] .cm-status-copy { animation: none; }
+.cm-status-symbol {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: clamp(16px, var(--cm-orb-size, var(--_cm-orb-size)), 192px);
+  height: clamp(16px, var(--cm-orb-size, var(--_cm-orb-size)), 192px);
+  color: var(--cm-success, #287968);
+}
+.cm-status-symbol > svg { width: 54%; height: 54%; max-width: 26px; max-height: 26px; }
+.cm-status[data-status="error"], .cm-status[data-status="error"] .cm-status-symbol { color: var(--cm-error, #b4434c); }
+.cm-status[data-status="idle"] { color: var(--cm-muted, #77899b); }
+
+/* No box, glow, network request, artificial typing queue or forced font. */
+.cm-stream {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--cm-text, inherit);
+  /* Permanent end space keeps the decorative tip within its containing line. */
+  padding-inline-end: calc(var(--cm-cursor-gap, 4px) + var(--cm-cursor-width, 3px) + 5px);
+}
+.cm-stream-glyph { animation: cm-ink-arrive var(--cm-glyph-fade, 320ms) ease-out both; }
+.cm-stream-caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: var(--cm-cursor-height, 1.1em);
+  vertical-align: -.16em;
+  pointer-events: none;
+  user-select: none;
+  animation: cm-tip-breathe 1800ms ease-in-out infinite;
+}
+.cm-stream-caret::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--cm-cursor-gap, 4px);
+  width: var(--cm-cursor-width, 3px);
+  border-radius: var(--cm-cursor-width, 3px);
+  background: linear-gradient(180deg, var(--cm-cyan, #21a8bd) 0%, var(--cm-blue, #1775b9) 26%, var(--cm-violet, #76518c) 45%, var(--cm-red, #db3b49) 62%, var(--cm-orange, #f28b2c) 78%, var(--cm-cyan, #21a8bd) 100%);
+  background-size: 100% 240%;
+  animation: cm-ribbon-flow var(--cm-cursor-cycle, 2600ms) ease-in-out infinite;
+}
+.cm-stream-caret::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--cm-cursor-gap, 4px) - 3px);
+  bottom: 1px;
+  width: calc(var(--cm-cursor-width, 3px) + 6px);
+  height: 1px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, var(--cm-blue, #1775b9), var(--cm-cyan, #21a8bd), transparent);
+  opacity: .45;
+}
+.cm-stream-caret > i {
+  position: absolute;
+  left: calc(var(--cm-cursor-gap, 4px) + var(--cm-cursor-width, 3px) + 2px);
+  top: 2px;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--cm-orange, #f28b2c);
+  animation: cm-tip-spark 2100ms ease-in-out infinite;
+}
+.cm-stream[data-phase="settled"] .cm-stream-caret { animation: cm-tip-settle var(--cm-cursor-settle, 360ms) cubic-bezier(.22, 1, .36, 1) both; }
+.cm-stream[data-phase="settled"] .cm-stream-caret::before, .cm-stream[data-phase="settled"] .cm-stream-caret > i { animation: none; }
+.cm-stream[data-motion-paused="true"] .cm-stream-glyph { animation: none; }
+.cm-stream[data-motion-paused="true"] .cm-stream-caret,
+.cm-stream[data-motion-paused="true"] .cm-stream-caret::before,
+.cm-stream[data-motion-paused="true"] .cm-stream-caret > i { animation-play-state: paused; }
+.cm-stream[data-motion-paused="true"][data-phase="settled"] .cm-stream-caret { animation: none; opacity: 0; }
+@keyframes cm-ink-arrive { from { opacity: .32; } to { opacity: 1; } }
+@keyframes cm-label-arrive { from { opacity: .35; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cm-tip-breathe { 0%, 100% { opacity: 1; transform: scaleY(1); } 50% { opacity: .65; transform: scaleY(.88); } }
+@keyframes cm-ribbon-flow { 0%, 100% { background-position: 50% 0%; } 50% { background-position: 50% 100%; } }
+@keyframes cm-tip-spark { 0%, 100% { opacity: .35; transform: translateY(0); } 50% { opacity: .85; transform: translateY(5px); } }
+@keyframes cm-tip-settle { from { opacity: .85; transform: scaleY(1); } to { opacity: 0; transform: scaleY(.35); } }
+@media (prefers-reduced-motion: reduce) {
+  .cm-status { transition: none; }
+  .cm-status-copy, .cm-stream *, .cm-stream *::before, .cm-stream *::after { animation: none !important; }
+  .cm-stream[data-phase="settled"] .cm-stream-caret { opacity: 0; }
+}
