@@ -34,6 +34,22 @@ export interface MotionTokens {
   collapseMs?: number;
   expandMs?: number;
   sheenCycleMs?: number;
+  /** Shared conversation layout and completion surface. */
+  conversationMaxWidth?: number;
+  conversationPadding?: number;
+  messageGap?: number;
+  responseGap?: number;
+  fontFamily?: string;
+  codeFontFamily?: string;
+  responseSurfaceColor?: string;
+  responseShadow?: string;
+  responseTransitionMs?: number;
+  activityDotOpacity?: number;
+  /** Presentation-only timings; never delay transport or invent progress. */
+  revealCharactersPerSecond?: number;
+  revealTailMs?: number;
+  waitingMessageMs?: number;
+  waitingVariantMs?: number;
   orbSize?: number;
   speed?: number;
   /** Bounded multipliers, not absolute particle counts. */
@@ -64,6 +80,13 @@ const tokenMap = {
   responseFontSize: ['--cm-response-font-size', 'px'], responseLineHeight: ['--cm-response-line-height', ''],
   orbTransitionMs: ['--cm-orb-transition', 'ms'], collapseMs: ['--cm-collapse', 'ms'],
   expandMs: ['--cm-expand', 'ms'], sheenCycleMs: ['--cm-sheen-cycle', 'ms'],
+  conversationMaxWidth: ['--cm-conversation-max-width', 'px'], conversationPadding: ['--cm-conversation-padding', 'px'],
+  messageGap: ['--cm-message-gap', 'px'], responseSurfaceColor: ['--cm-response-surface', ''],
+  responseGap: ['--cm-response-gap', 'px'], fontFamily: ['--cm-font-family', ''], codeFontFamily: ['--cm-code-font-family', ''],
+  responseShadow: ['--cm-response-shadow', ''], responseTransitionMs: ['--cm-response-transition', 'ms'],
+  activityDotOpacity: ['--cm-activity-dot-opacity', ''],
+  revealCharactersPerSecond: ['--cm-reveal-rate', ''], revealTailMs: ['--cm-reveal-tail', 'ms'],
+  waitingMessageMs: ['--cm-waiting-message', 'ms'], waitingVariantMs: ['--cm-waiting-variant', 'ms'],
   orbSize: ['--cm-orb-size', 'px'], speed: ['--cm-speed', ''],
   density: ['--cm-density', ''], dotScale: ['--cm-dot-scale', ''],
   labelSize: ['--cm-label-size', 'px'], gap: ['--cm-gap', 'px'],
@@ -80,6 +103,9 @@ const bounds: Partial<Record<keyof MotionTokens, readonly [number, number]>> = {
   cursorCycleMs: [500, 10000], cursorSettleMs: [0, 2000],
   panelRadius: [0, 40], panelPadding: [0, 48], responseFontSize: [12, 32], responseLineHeight: [1, 2.5],
   orbTransitionMs: [0, 3000], collapseMs: [0, 3000], expandMs: [0, 3000], sheenCycleMs: [500, 10000],
+  conversationMaxWidth: [240, 2400], conversationPadding: [0, 80], messageGap: [0, 80], responseGap: [0, 48],
+  responseTransitionMs: [0, 3000], activityDotOpacity: [0, 1],
+  revealCharactersPerSecond: [1, 2000], revealTailMs: [0, 6000], waitingMessageMs: [1000, 60000], waitingVariantMs: [1000, 60000],
 };
 
 /** Usable on any host element, without a provider or a runtime theme dependency. */
@@ -108,6 +134,7 @@ export const darkTokens = {
   orbInk: '#D3DCE7',
   textColor: '#D3E6F6', mutedColor: '#A2B6C8', surfaceColor: '#182635',
   borderColor: '#2B4055', successColor: '#78C7B3', errorColor: '#F5A0A8',
+  subtleColor: '#203246', responseSurfaceColor: '#1c2d40',
 } satisfies MotionTokens;
 
 /** One six-digit accent generates coordinated canvas, cursor, panel and text colors.
@@ -121,6 +148,7 @@ export function createMotionTokens(accent: string, overrides: MotionTokens = {})
     accentColor: accent, highlightColor: mix(255, .72), subtleColor: mix(255, .95), linkColor: mix(0, .28),
     textColor: '#20262e', mutedColor: '#647080', surfaceColor: '#ffffff', borderColor: '#dfe4eb',
     codeBackgroundColor: '#f1f4f8', codeTextColor: '#263347',
+    responseSurfaceColor: mix(255, .97),
     ...overrides,
   };
 }

@@ -9,3 +9,10 @@ The original visual references were the **band**, **ping** and **ribbon** thinki
 The default five-stop palette (cyan, blue, violet, red, orange) approximates a user-supplied Saint-Gobain brand mark for screen UI use. It is not an official brand specification. No Saint-Gobain or Norton logos, trademarks as artwork, mascots, photos or business content are distributed in this package. Names mentioned for context remain the property of their respective owners; there is no affiliation or endorsement implied.
 
 The MIT license covers the code in this repository, not rights to third-party trademarks or referenced designs. Consumers should supply approved brand assets and design tokens for their own use.
+
+The v0.3 conversation following, stable completion surface and Markdown block
+presentation were generalized from the repository owner's application-local
+chat implementations. This extraction includes reusable UI logic only. All
+customer palettes in `examples/customerThemes.ts` are synthetic; no private
+project data, service endpoints, credentials, logos or character artwork are
+included. Customer-specific text and public processing stages remain inputs.

@@ -1,5 +1,6 @@
 'use client';
 
+import { forwardRef } from 'react';
 import { ThinkingOrb } from './ThinkingOrb.js';
 import { TransitionOrb } from './TransitionOrb.js';
 import { useMotionEnvironment } from './useMotionEnvironment.js';
@@ -31,10 +32,10 @@ export interface StatusPillProps {
   animatedLabel?: boolean;
 }
 
-export function StatusPill({ label, variant = 'band', colorMode, density, dotScale, status = 'running', size = 'md', appearance = 'plain', paused = false, speed, palette, tokens, style, className = '', announce = false, transition = false, animatedLabel = false }: StatusPillProps) {
+export const StatusPill = forwardRef<HTMLSpanElement, StatusPillProps>(function StatusPill({ label, variant = 'band', colorMode, density, dotScale, status = 'running', size = 'md', appearance = 'plain', paused = false, speed, palette, tokens, style, className = '', announce = false, transition = false, animatedLabel = false }, ref) {
   const quiet = useMotionEnvironment();
   const Orb = transition ? TransitionOrb : ThinkingOrb;
-  return <span className={`cm-status ${className}`} data-status={status} data-size={size} data-appearance={appearance}
+  return <span ref={ref} className={`cm-status ${className}`} data-status={status} data-size={size} data-appearance={appearance}
     data-motion-paused={paused || quiet} data-animated-label={animatedLabel && status === 'running'}
     style={{ ...motionTokens(tokens), ...style }} role={announce ? 'status' : undefined}
     aria-live={announce ? 'polite' : undefined} aria-atomic={announce ? true : undefined}>
@@ -43,4 +44,4 @@ export function StatusPill({ label, variant = 'band', colorMode, density, dotSca
       : <Orb variant={variant} colorMode={colorMode} density={density} dotScale={dotScale} paused={paused || status === 'idle'} speed={speed} palette={palette}/>}
     <span className="cm-status-label"><span className="cm-status-copy" key={label}>{label}</span></span>
   </span>;
-}
+});

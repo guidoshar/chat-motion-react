@@ -15,9 +15,9 @@ const [bundle] = JSON.parse(output);
 const docs = ['README.md', 'README.en.md', 'LICENSE', 'NOTICE.md',
   'THIRD_PARTY_NOTICES.md', 'SECURITY.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'package.json',
   'docs/chat-experience.md'];
-const examples = ['examples/SseReply.tsx', 'examples/ChatExperience.tsx'];
+const examples = ['examples/SseReply.tsx', 'examples/ChatExperience.tsx', 'examples/CustomerChat.tsx', 'examples/customerThemes.ts'];
 const required = [...docs, 'dist/index.js', 'dist/index.d.ts', 'dist/styles.css',
-  'dist/markdown.js', 'dist/markdown.d.ts', 'dist/ChatResponse.js', ...examples];
+  'dist/markdown.js', 'dist/markdown.d.ts', 'dist/ChatResponse.js', 'dist/ChatConversation.js', 'dist/useChatAutoScroll.js', ...examples];
 const names = new Set(bundle.files.map(file => file.path));
 const allowed = path => docs.includes(path) || examples.includes(path)
   || /^dist\/[\w.-]+\.(?:js|d\.ts|css|map)$/.test(path);

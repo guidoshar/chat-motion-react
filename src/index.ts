@@ -10,5 +10,7 @@ export { createMotionTokens } from './tokens.js';
 export { TransitionOrb } from './TransitionOrb.js';
 export { ThinkingIndicator, type ThinkingIndicatorProps } from './ThinkingIndicator.js';
 export { ActivityPanel, type ActivityPanelProps, type ActivityStep, type ActivityState } from './ActivityPanel.js';
-export { ChatResponse, type ChatResponseProps, type ResponsePhase } from './ChatResponse.js';
+export { ChatResponse, type ChatResponseProps, type ResponsePhase, type ResponseLabel } from './ChatResponse.js';
 export { useStreamingReveal, type StreamingRevealOptions } from './useStreamingReveal.js';
+export { ChatConversation, type ChatConversationProps } from './ChatConversation.js';
+export { useChatAutoScroll, type ChatAutoScrollOptions, ChatScrollPauseContext } from './useChatAutoScroll.js';

@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { StatusPill, type StatusPillProps } from './StatusPill.js';
 import { useMotionEnvironment } from './useMotionEnvironment.js';
 import type { OrbVariant } from './orbGeometry.js';
+import { useChatTiming } from './useChatTiming.js';
 
 const defaultMessages = ['Preparing a response', 'Working on your request', 'Considering the details'];
 const defaultVariants: OrbVariant[] = ['composing', 'solving', 'ribbon', 'band', 'ping'];
@@ -18,8 +19,8 @@ export interface ThinkingIndicatorProps extends Omit<StatusPillProps, 'label' | 
 }
 
 /** Waiting copy describes waiting, not simulated work or progress. The caller ends it on actual output. */
-export function ThinkingIndicator({ active = true, messages = defaultMessages, variants = defaultVariants,
-  messageIntervalMs = 5000, variantIntervalMs = 15000, paused = false, announce = false, ...props }: ThinkingIndicatorProps) {
+export function useWaitingState({ active = true, messages = defaultMessages, variants = defaultVariants,
+  messageIntervalMs = 5000, variantIntervalMs = 15000, paused = false }: ThinkingIndicatorProps) {
   const quiet = useMotionEnvironment();
   const [copy, setCopy] = useState(0);
   const [shape, setShape] = useState(0);
@@ -36,8 +37,17 @@ export function ThinkingIndicator({ active = true, messages = defaultMessages, v
     const timer = window.setInterval(() => setShape(value => value + 1), shapeMs);
     return () => window.clearInterval(timer);
   }, [stopped, variants.length, shapeMs]);
+  return { label: messages.length ? messages[copy % messages.length] : defaultMessages[0],
+    variant: variants.length ? variants[shape % variants.length] : defaultVariants[0] };
+}
+
+export function ThinkingIndicator({ active = true, messages, variants, messageIntervalMs, variantIntervalMs,
+  paused = false, announce = false, transition = false, ...props }: ThinkingIndicatorProps) {
+  const host = useRef<HTMLSpanElement>(null);
+  const timing = useChatTiming(host, active);
+  const waiting = useWaitingState({ active, messages, variants,
+    messageIntervalMs: messageIntervalMs ?? timing.messageIntervalMs,
+    variantIntervalMs: variantIntervalMs ?? timing.variantIntervalMs, paused });
   if (!active) return null;
-  return <StatusPill transition animatedLabel {...props} paused={paused || quiet} announce={announce}
-    label={messages.length ? messages[copy % messages.length] : defaultMessages[0]}
-    variant={variants.length ? variants[shape % variants.length] : defaultVariants[0]} />;
+  return <StatusPill ref={host} {...props} {...waiting} transition={transition} animatedLabel paused={paused} announce={announce} />;
 }

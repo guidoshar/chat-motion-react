@@ -2,6 +2,19 @@
 
 ## 0.3.0 (unreleased)
 
+- Add `ChatConversation` and `useChatAutoScroll`: resize-aware following,
+  reading/inspection pause, a new-submission resume key and an optional resume button.
+- Add ready-made `MarkdownResponse` at `/markdown`. Integrate optional pacing
+  into `ChatResponse`, retain one mounted completion surface, and wait for the
+  display buffer before success framing/results. Preserve partial replies on
+  errors, cancellation and the new `incomplete` phase; `resultWhen="terminal"`
+  explicitly opts into partial results (previous terminal behavior).
+- Use one header orb and dot step indicators by default. Keep transitions and
+  per-step orbs opt-in. Preserve manual disclosure until the request ID changes.
+- Place the Markdown tail inside the final block, with keyboard-scrollable tables.
+- Add bounded customer tokens for fonts, reading width, spacing, result surface,
+  shadow, waiting/presentation timing and decoration. Include customer theme
+  configurations and a complete chat example with identical markup across themes.
 - Extract composable `TransitionOrb`, `ThinkingIndicator`, `ActivityPanel` and
   `ChatResponse` presentation components. Preserve all five orb geometries and
   existing public APIs; transition layers are bounded to two.

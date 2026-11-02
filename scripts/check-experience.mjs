@@ -29,14 +29,14 @@ try {
   await section.scrollIntoViewIfNeeded();
   await section.locator('.cm-activity-heading').waitFor();
   assert.equal(await section.locator('.cm-activity-heading').getAttribute('aria-expanded'), 'true');
-  assert.deepEqual(await section.locator('.cm-activity-step-icon canvas').evaluateAll(nodes => nodes.map(n => n.getBoundingClientRect().width)), [22]);
+  assert.equal(await section.locator('.cm-response canvas').count(), 1);
   await page.getByLabel('聊天体验主色').fill('#486b88');
   assert.equal(await section.locator('.cm-response').evaluate(el => getComputedStyle(el).getPropertyValue('--cm-accent').trim()), '#486b88');
   await page.getByLabel('聊天体验主色').blur();
   await section.screenshot({ path: resolve(output, 'thinking.png') });
   await section.getByRole('button', { name: '流式回复', exact: true }).click();
   await section.locator('.cm-markdown').waitFor();
-  await section.locator('.cm-response[data-phase="complete"]').waitFor();
+  await section.locator('.cm-response[data-phase="complete"][data-framed="true"]').waitFor();
   assert.equal(await section.locator('.cm-activity-heading').getAttribute('aria-expanded'), 'false');
   assert.equal(await section.getByRole('figure').count(), 1);
   assert.equal(await section.locator('.cm-markdown table').count(), 1);

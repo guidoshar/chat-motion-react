@@ -27,6 +27,13 @@ content and public progress stages. Design tokens are colors/sizes, not API keys
 
 ### v0.3 · Composable chat experience
 
+Use `ChatConversation` + `MarkdownResponse` for a ready-made chat: one orb,
+collapsible progress, paced Markdown, completion-only framing and scroll following
+that yields to reading. New customers replace a [theme token object](examples/customerThemes.ts)
+for colors, fonts, radius, shadows, width, spacing and motion/presentation timing.
+See the [complete customer example](examples/CustomerChat.tsx). Business stages and
+copy stay application inputs; plain `ChatResponse` keeps its immediate-text API.
+
 `TransitionOrb`, `ThinkingIndicator`, `ActivityPanel` and `ChatResponse` compose
 waiting, public stages, streaming replies and completion disclosure. Use them
 together or independently. `createMotionTokens('#486b88')` coordinates the orb,

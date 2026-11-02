@@ -27,6 +27,12 @@
 用 `createMotionTokens('#486b88')` 一次设置 orb、光标、文字高光和面板色彩；
 图表通过可选 `result` 插槽接入，Markdown 使用独立的可选入口。
 
+完整聊天可直接使用 `ChatConversation` + `MarkdownResponse`：包含阅读时暂停的
+自动滚动、单个 Orb、可收拢阶段、流式 Markdown，以及正文展示完成后才出现的结果卡片。
+新客户只需替换 [客户主题 token 配置](examples/customerThemes.ts)，统一控制颜色、
+字体、方角/圆角、阴影、宽度、间距和动画/展示节奏；见 [完整客户聊天示例](examples/CustomerChat.tsx)。
+状态、文案与业务数据由应用传入。普通 `ChatResponse` 的即时展示用法仍然保留。
+
 ```tsx
 import { ChatResponse, MotionTheme, createMotionTokens } from '@guidoshar/chat-motion-react';
 import '@guidoshar/chat-motion-react/styles.css';
