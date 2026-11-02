@@ -17,6 +17,8 @@
 - Keep application data, endpoints, private diagnostics, branding and secrets
   outside the package. No model calls, analytics, hosted preview or npm publish.
 - Update the local Vite development server to patched 6.4.5.
+- Include complete demo source on main, a production-preview command and an
+  ECS/Nginx self-hosting guide with a static-site configuration example.
 
 ## 0.2.1
 

@@ -170,10 +170,15 @@ http://127.0.0.1:5188/?view=chat (standalone, responsive), or `/#experience` in 
 desktop showroom. Use the phase buttons, accent picker and
 Markdown/chart switches with synthetic data only. No public hosting is needed.
 
-Version 0.3 is currently a source change, not an npm-registry release. To consume
-the checked-out branch locally, run `npm run build`, `npm pack`, then install
+Version 0.3 is available as source on `main`, not an npm-registry release. To consume
+the checked-out source locally, run `npm run build`, `npm pack`, then install
 the generated `.tgz` in your application. See [example](../examples/ChatExperience.tsx).
 The application is not automatically migrated by this extraction.
+
+The complete demo source is also on `main`. Build the static site with
+`npm run build:demo` and serve `demo-dist/` on your own ECS/Nginx host;
+see [self-hosting](self-hosting.md). `npm run preview:demo` checks the production
+output locally on port 5189.
 
 Tests cover state transitions, token bounds, StrictMode cleanup, public-summary
 disclosure, Unicode streaming and Markdown boundaries. Run `npm test`,

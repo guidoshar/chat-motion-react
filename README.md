@@ -37,13 +37,37 @@ import '@guidoshar/chat-motion-react/styles.css';
 ```
 
 查看 [完整接入指南与 token 表](docs/chat-experience.md) 和
-[最小聊天示例](examples/ChatExperience.tsx)。当前分支为 v0.3 开发版本；
-下方 v0.2.1 是已有 Release，不包含新增组件。体验新版请本地运行当前分支的
+[最小聊天示例](examples/ChatExperience.tsx)。`main` 包含 v0.3 组件库和完整演示源码；
+下方 v0.2.1 是历史 Release，不包含新增组件。体验新版请本地运行 `main` 的
 `npm run dev`，进入 `http://127.0.0.1:5188/#experience`；安装可用 `npm pack` 生成本地包。
 
 ![通用聊天组件：阶段收拢、Markdown 正文和可选图表，全部为合成示例](docs/media/chat-experience.png)
 
 独立聊天预览：`http://127.0.0.1:5188/?view=chat`，可在窄屏查看。
+
+### 演示源码与自行部署
+
+演示界面与组件库一起维护在 `main`，可以直接克隆、修改和部署到自己的 ECS。
+
+| 路径 | 内容 |
+| --- | --- |
+| [demo/main.tsx](demo/main.tsx) | 完整组件展厅、参数工作台、交互场景与入口 |
+| [demo/ExperienceDemo.tsx](demo/ExperienceDemo.tsx) | 独立聊天演示、主色控制和阶段/Markdown/图表开关 |
+| [demo/styles.css](demo/styles.css) | 演示页面布局与样式 |
+| [src/](src/) | 可复用的 React 组件、动效和设计 token |
+| [vite.config.ts](vite.config.ts) | 开发、预览与静态构建配置 |
+| [deploy/nginx.conf](deploy/nginx.conf) | ECS/Nginx 静态站点配置示例 |
+
+```powershell
+npm ci
+npm run build:demo     # 输出完整站点到 demo-dist/
+npm run preview:demo   # 在 http://127.0.0.1:5189 检查生产构建
+```
+
+部署时只需将 `demo-dist/` 的内容放到 Nginx 站点目录。根路径 `/` 是完整展厅，
+`/?view=chat` 是独立聊天演示。演示使用合成数据，无需后端、数据库或 API 密钥。
+构建产物不提交 Git，可从源码重建；npm 组件包与演示站点分别构建。
+具体步骤见 [ECS 自行部署说明](docs/self-hosting.md)。
 
 仓库内置完整的桌面展示页，启动后访问 **http://127.0.0.1:5188**。不是静态效果图：五种 Orb 都在运行，可切换主题、调整参数并体验示例流程。没有公开托管的在线 Demo。
 
@@ -121,6 +145,7 @@ import '@guidoshar/chat-motion-react/styles.css';
 ```powershell
 git clone git@github.com:guidoshar/chat-motion-react.git
 cd chat-motion-react
+git switch main
 npm ci
 npm run dev
 ```
@@ -130,6 +155,7 @@ npm run dev
 ```powershell
 npm run build        # ESM、TypeScript 声明、CSS → dist/
 npm run build:demo   # 类型检查并构建本地演示 → demo-dist/
+npm run preview:demo # 本地检查生产构建 → http://127.0.0.1:5189
 npm pack            # 生成可安装的 .tgz
 ```
 
@@ -141,7 +167,10 @@ npm pack            # 生成可安装的 .tgz
 
 ### 从 GitHub 安装
 
-推荐下载 [v0.2.1 Release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.2.1) 中预构建的 `.tgz`，核对 release 的 SHA-256 后安装。此路径不需要在消费端运行构建脚本：
+需要 v0.3 的聊天组件时，从 `main` 构建：`npm ci`、`npm run build`、`npm pack`，
+再在消费项目安装生成的 `guidoshar-chat-motion-react-0.3.0.tgz`。生产使用时记录所构建的 commit。
+
+如需历史 v0.2.1，可下载 [v0.2.1 Release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.2.1) 中预构建的 `.tgz`，核对 release 的 SHA-256 后安装：
 
 ```powershell
 Get-FileHash ./guidoshar-chat-motion-react-0.2.1.tgz -Algorithm SHA256

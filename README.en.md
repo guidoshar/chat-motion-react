@@ -43,13 +43,39 @@ import '@guidoshar/chat-motion-react/styles.css';
 ```
 
 See the [integration guide and token table](docs/chat-experience.md) and
-[minimal example](examples/ChatExperience.tsx). This branch is v0.3 development;
-the v0.2.1 release linked below does not contain the new exports. Run the current
-branch locally at `http://127.0.0.1:5188/#experience`, or build and `npm pack` it.
+[minimal example](examples/ChatExperience.tsx). `main` contains the v0.3 library
+and complete demo source. The historical v0.2.1 release linked below does not
+contain the new exports. Run `main` locally at
+`http://127.0.0.1:5188/#experience`, or build and `npm pack` it.
 
 ![Composable chat: collapsed public stages, Markdown reply and optional chart; synthetic data](docs/media/chat-experience.png)
 
 Standalone responsive preview: `http://127.0.0.1:5188/?view=chat`.
+
+### Demo source and self-hosting
+
+The full interface is checked into `main`, ready to modify and deploy on your
+own ECS instance or static web server:
+
+| Path | Contents |
+| --- | --- |
+| [demo/main.tsx](demo/main.tsx) | Full showroom, token playground, scenarios and entry point |
+| [demo/ExperienceDemo.tsx](demo/ExperienceDemo.tsx) | Standalone chat demo and optional content controls |
+| [demo/styles.css](demo/styles.css) | Demo layout and styles |
+| [src/](src/) | Reusable React components, motion and tokens |
+| [vite.config.ts](vite.config.ts) | Development, preview and static build configuration |
+| [deploy/nginx.conf](deploy/nginx.conf) | Example Nginx static-site configuration |
+
+```powershell
+npm ci
+npm run build:demo     # Complete static site in demo-dist/
+npm run preview:demo   # Check production output at http://127.0.0.1:5189
+```
+
+Serve the contents of `demo-dist/` with Nginx. `/` opens the full showroom;
+`/?view=chat` opens the standalone chat demo. Synthetic data requires no backend,
+database or API keys. Generated builds stay out of Git; the library package and
+the demo site have separate outputs. See the [ECS self-hosting guide](docs/self-hosting.md).
 
 Run the local desktop showroom at **http://127.0.0.1:5188**. There is no hosted
 public demo: the repository includes a live gallery, a token playground with
@@ -94,8 +120,13 @@ boundaries, without claiming enterprise certification.
 
 ## Install
 
-This project is published on GitHub, **not on the npm registry**. Download the
-prebuilt `guidoshar-chat-motion-react-0.2.1.tgz` from the
+Source is available on GitHub, **not on the npm registry**. For the v0.3 chat
+components, build `main` with `npm ci`, `npm run build`, then `npm pack`, and
+install the resulting `guidoshar-chat-motion-react-0.3.0.tgz` in your application.
+Record the source commit for reproducible production use.
+
+For the historical v0.2.1 version, download the prebuilt
+`guidoshar-chat-motion-react-0.2.1.tgz` from the
 [v0.2.1 release](https://github.com/guidoshar/chat-motion-react/releases/tag/v0.2.1),
 compare its SHA-256 with the release, then install:
 
