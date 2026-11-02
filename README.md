@@ -20,6 +20,31 @@
 
 ## 组件展厅
 
+### v0.3 · 通用聊天体验
+
+新增 `TransitionOrb`、`ThinkingIndicator`、`ActivityPanel` 和 `ChatResponse`，
+把等待、阶段反馈、流式正文与完成收拢组合在一起，也可以分别使用。
+用 `createMotionTokens('#486b88')` 一次设置 orb、光标、文字高光和面板色彩；
+图表通过可选 `result` 插槽接入，Markdown 使用独立的可选入口。
+
+```tsx
+import { ChatResponse, MotionTheme, createMotionTokens } from '@guidoshar/chat-motion-react';
+import '@guidoshar/chat-motion-react/styles.css';
+
+<MotionTheme tokens={createMotionTokens('#486b88')}>
+  <ChatResponse text={replyText} phase={done ? 'complete' : 'streaming'} />
+</MotionTheme>
+```
+
+查看 [完整接入指南与 token 表](docs/chat-experience.md) 和
+[最小聊天示例](examples/ChatExperience.tsx)。当前分支为 v0.3 开发版本；
+下方 v0.2.1 是已有 Release，不包含新增组件。体验新版请本地运行当前分支的
+`npm run dev`，进入 `http://127.0.0.1:5188/#experience`；安装可用 `npm pack` 生成本地包。
+
+![通用聊天组件：阶段收拢、Markdown 正文和可选图表，全部为合成示例](docs/media/chat-experience.png)
+
+独立聊天预览：`http://127.0.0.1:5188/?view=chat`，可在窄屏查看。
+
 仓库内置完整的桌面展示页，启动后访问 **http://127.0.0.1:5188**。不是静态效果图：五种 Orb 都在运行，可切换主题、调整参数并体验示例流程。没有公开托管的在线 Demo。
 
 | 展区 | 可以做什么 |
@@ -27,6 +52,7 @@
 | **组件总览** | 同屏比较 Solving / Composing / Ping / Band / Ribbon |
 | **动效实验室** | 调整五色色标、单色模式、尺寸、速度、密度与光标；复制当前 React 代码 |
 | **业务场景** | 体验知识检索、工业选型、报价协同中的阶段切换与流式输出 |
+| **通用聊天体验** | 单色 token、阶段面板、流式 Markdown、可选图表与历史回复 |
 | **接入与保障** | 了解组件边界、设计体系适配、无障碍行为与安全责任 |
 
 <details>
@@ -60,7 +86,7 @@
 
 - **给产品团队：** 用统一的视觉语言表达“正在处理、已完成、暂时中断、等待开始”，而不是在每个页面重新设计状态。
 - **给设计团队：** 无外框优先、品牌高光克制，五种动作有不同节奏。
-- **给工程团队：** 两个核心呈现组件、类型化 token、ESM 与 CSS 独立入口。复用已有 SSE、状态机和 UI 框架。
+- **给工程团队：** 可组合的呈现组件、类型化 token、ESM 与 CSS 独立入口。复用已有 SSE、状态机和 UI 框架。
 - **给安全与维护团队：** 无遥测、无凭据读取、无远程运行时素材；许可来源、发布包范围和宿主责任明确公开。
 
 这是面向产品集成的设计取向，**不代表已经取得企业安全、无障碍或性能认证**。
@@ -336,7 +362,7 @@ data: {}
 - `paused` 只暂停动效，不停止 SSE 或阻止文字更新。退出视口自动暂停只适用于粒子；光标支持页面隐藏和系统减少动态效果。
 - 支持服务端渲染：render 阶段不读取 `window` / `document`。导出保留 `use client`；Next.js App Router 中从客户端组件使用，在根 layout 导入 CSS。此仓库不包含 Next.js 集成验证。
 - 粒子默认装饰性隐藏。独立使用时给 `label`；状态提示可用 `announce`。流式正文不设逐字 `aria-live`，避免读屏反复朗读；在宿主界面用一个独立 live region 宣布完成。
-- 文本按纯文本安全渲染，不支持 Markdown/HTML；富文本排版请由宿主渲染器负责，不要把未清洗的服务端内容插入 HTML。
+- 核心入口按纯文本渲染；可选 `/markdown` 入口支持 GFM，禁用原始 HTML，默认不加载图片。详情见 [接入指南](docs/chat-experience.md)。
 - 无状态机、模型调用、用户系统、业务逻辑或第三方品牌人物资产。可与 HeroUI、Fluent UI 或原生 React 页面组合。
 
 ## 来源与许可
@@ -347,7 +373,7 @@ MIT，见 [LICENSE](LICENSE)；Libraries.dev 改编部分的原作者完整 MIT 
 
 v0.2.1 修复了演示页 JSX runtime 导致的 `React is not defined` 白屏。本次完成 TypeScript／组件包／演示构建、发布内容检查，以及本地桌面 Chrome 的截图和针对性演示交互检查。截图来自真实页面，不是设计稿。
 
-没有运行完整自动化回归或跨浏览器测试矩阵。React 18/19 是声明的 peer 范围，不代表已完成全版本兼容性验证。未经过独立安全审计、WCAG 认证或企业合规认证；生产接入前请执行 [CONTRIBUTING.md](CONTRIBUTING.md) 的验收清单。
+v0.3 增加组件状态、流式更新、token 和可选 Markdown 的自动化测试，CI 覆盖 React 18.3.1 / 19.2.0。尚未完成跨浏览器和完整无障碍验收；生产接入前请执行 [CONTRIBUTING.md](CONTRIBUTING.md) 的验收清单。
 
 ---
 

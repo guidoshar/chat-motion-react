@@ -11,6 +11,7 @@ Docker, hosted preview or credentials are required. PowerShell commands:
 ```powershell
 npm ci
 npm run dev
+npm test
 npm run build:demo
 npm run check:package
 ```
@@ -45,9 +46,10 @@ test conventions before running them.
 - Stream ownership, cancellation races, reconnect protocol, server limits.
 - Profiling representative hardware: no guaranteed 60/120 fps is claimed.
 
-CI currently builds and checks packaging only. There is no automated runtime or
-browser regression suite in this release. Add approved regression coverage
-before making wider compatibility or performance guarantees.
+CI runs component tests, package/demo builds and the package inventory guard on
+React 18.3.1 and 19.2.0. Tests cover state transitions, token bounds, SSR output,
+StrictMode cleanup, streaming Unicode and optional Markdown boundaries. They do
+not constitute full browser, hydration, screen-reader or performance coverage.
 
 ## Documentation screenshots
 
@@ -57,6 +59,13 @@ headless process and only allows the local preview origin. It captures the
 light/dark showroom, token playground and one completed business demonstration,
 and reports uncaught page errors. It never attaches to a personal browser.
 CI does not run this script or install a browser.
+
+For the new standalone chat preview (`http://127.0.0.1:5188/?view=chat`), run
+`npm run check:experience`. It checks token propagation, streaming completion,
+disclosure/keyboard, optional slots, reduced motion and widths from 390 to 1920px.
+It blocks non-local requests and saves synthetic captures under ignored
+`.local/experience`. Chrome is the default; `CHAT_MOTION_BROWSER_PATH` may point
+to your own isolated Chromium executable. No browser is installed automatically.
 
 Screenshots are public, synthetic demo content; keep customer data and actual
 prices out of them. Inspect the output before committing. These focused checks

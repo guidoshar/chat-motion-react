@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { MotionTheme, ThinkingOrb, StatusPill, StreamingText, darkTokens, type MotionTokens, type OrbVariant, type OrbColorMode } from '../src/index.js';
 import '../src/styles.css';
 import './styles.css';
+import ExperienceDemo from './ExperienceDemo.js';
 
 const repository = 'https://github.com/guidoshar/chat-motion-react';
 const variants: { id: OrbVariant; name: string; description: string; use: string }[] = [
@@ -26,7 +27,7 @@ const scenarios: Record<ScenarioId, { name: string; role: string; request: strin
     boundary: '展示“检索 → 整理 → 回答”的交互。组件本身不执行检索，也不生成引用。',
   },
   selection: {
-    name: '工业选型', role: '诺小顿 · 选型助手', request: '钢件平面磨削，目标 Ra 0.8，需要补充哪些工况？',
+    name: '工业选型', role: '示例选型助手', request: '钢件平面磨削，目标 Ra 0.8，需要补充哪些工况？',
     stages: ['识别材料与加工目标', '核对选型所需参数', '整理下一步确认清单'],
     reply: '已理解你的平面磨削需求与目标粗糙度。\n接下来还需确认工件硬度、砂轮线速度、砂轮厚度和单次加工余量。\n参数齐全后，可将结构化工况交给你现有的规则引擎，匹配候选方案并查看规则依据。',
     boundary: '展示需求澄清与规则引擎的衔接方式。这里没有连接真实选型规则或产品系统。',
@@ -115,6 +116,7 @@ const tokens = ${JSON.stringify({ ...tokens, orbSize: size }, null, 2)};
       <nav aria-label="展厅导航">
         <a href="#overview"><span>01</span> 组件总览 <Arrow/></a>
         <a href="#playground"><span>02</span> 动效实验室 <Arrow/></a>
+        <a href="#experience"><span>NEW</span> 聊天体验 <Arrow/></a>
         <a href="#scenarios"><span>03</span> 业务场景 <Arrow/></a>
         <a href="#integration"><span>04</span> 接入与保障 <Arrow/></a>
       </nav>
@@ -165,6 +167,7 @@ const tokens = ${JSON.stringify({ ...tokens, orbSize: size }, null, 2)};
           </div>
         </section>
 
+        <ExperienceDemo paused={paused} />
         <section id="integration" className="section integration-section">
           <div className="section-heading"><div><p className="eyebrow">SMALL SURFACE. CLEAR BOUNDARIES.</p><h2>融入产品，不接管你的系统。</h2></div><a href={repository + '#在其他-react-项目安装'}>开始接入 <Arrow diagonal/></a></div>
           <div className="integration-grid"><article><span>01 / CONNECT</span><h3>保留已有的数据链路</h3><p>接入你已有的 SSE、fetch 或状态机。把累积文本和公开阶段传进来，渲染由组件完成。</p></article><article><span>02 / CUSTOMIZE</span><h3>遵循你的设计体系</h3><p>不强制 UI 框架，不覆盖全局字体。通过共享 token，与 HeroUI、Fluent UI 或原生页面组合。</p></article><article><span>03 / RESPECT</span><h3>尊重用户与安全边界</h3><p>支持减少动态效果与高对比度。不采集数据、不读取密钥，也不替代后端授权与安全审计。</p></article></div>
@@ -177,4 +180,7 @@ const tokens = ${JSON.stringify({ ...tokens, orbSize: size }, null, 2)};
   </MotionTheme>;
 }
 
-createRoot(document.getElementById('root')!).render(<StrictMode><Demo/></StrictMode>);
+const chatOnly = new URLSearchParams(window.location.search).get('view') === 'chat';
+createRoot(document.getElementById('root')!).render(<StrictMode>{chatOnly
+  ? <div className="showcase experience-standalone"><a href="/">← 全部组件</a><ExperienceDemo /></div>
+  : <Demo />}</StrictMode>);

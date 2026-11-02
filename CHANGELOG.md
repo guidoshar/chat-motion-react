@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.3.0 (unreleased)
+
+- Extract composable `TransitionOrb`, `ThinkingIndicator`, `ActivityPanel` and
+  `ChatResponse` presentation components. Preserve all five orb geometries and
+  existing public APIs; transition layers are bounded to two.
+- Add semantic surface/accent/code tokens, bounded motion/spacing controls and
+  `createMotionTokens` to derive a coordinated theme from one accent.
+- Add an opt-in grapheme-aware `useStreamingReveal` buffer with bounded final
+  catch-up, interruption/history flushing and timer cleanup.
+- Add optional `StreamingMarkdown` at `/markdown` with GFM support, raw HTML
+  disabled, default URL filtering and images opt-in. Core needs only React.
+- Support optional chart/table/attachment/action slots without a chart library.
+- Add a synthetic local chat playground, public integration guide, package
+  inventory checks and component tests in a React 18.3.1 / 19.2.0 CI matrix.
+- Keep application data, endpoints, private diagnostics, branding and secrets
+  outside the package. No model calls, analytics, hosted preview or npm publish.
+- Update the local Vite development server to patched 6.4.5.
+
 ## 0.2.1
 
 ### Fixed

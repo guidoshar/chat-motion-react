@@ -17,19 +17,23 @@ without disclosing vulnerability details. No response-time SLA is promised.
 
 ## Implemented boundaries
 
-- Runtime components make no network requests, use no telemetry, load no remote
-  assets, read no credentials and write no persistent storage.
-- Text is rendered through React text nodes, not HTML, Markdown, eval or script
-  injection. This prevents interpreting text as markup; it does not detect
-  misleading content, Unicode bidi spoofing or sensitive data.
+- Core components make no network requests, use no telemetry, load no remote
+  assets, read no credentials and write no persistent storage. Caller-provided
+  React slots can have their own behavior and remain the host's responsibility.
+- Core text is rendered through React text nodes. The optional `/markdown`
+  entry uses react-markdown/remark-gfm, disables raw HTML and retains default
+  URL filtering. Images are alt text unless `allowImages` is explicitly enabled;
+  enabling images can issue network requests. Links are navigable user content.
+  These boundaries do not detect misleading content, bidi spoofing or secrets.
 - Canvas size, speed, particle density, dot scale, DPR and geometry cache are
   bounded. Loops stop offscreen, in background tabs, when paused or with reduced
   motion / forced colors. These limits are per instance, not a global CPU quota.
 - The token helper accepts known keys, finite numeric values and bounded
   dimensions; rejects invalid palette values and common CSS URL/declaration
   input. It is a configuration guard, not a security parser for hostile CSS.
-- Runtime dependencies consist of the host's React peer; build/demo tooling is
-  separate. Release assets are prebuilt and include license notices.
+- Core runtime dependencies consist of the host's React peer. Markdown peers
+  are optional and imported only from `/markdown`. Build/demo tooling is separate.
+  Release assets are prebuilt and include license notices.
 
 ## Host application responsibilities
 
@@ -60,7 +64,7 @@ without disclosing vulnerability details. No response-time SLA is promised.
 
 ## Packaging and CI
 
-The package allowlist contains only built components, the SSE example, package
+The package allowlist contains only built components, synthetic examples, package
 metadata and public documentation/licenses. `npm run check:package` checks that
 inventory and common credential patterns; it is not a comprehensive secret
 scanner. CI uses pinned action revisions, read-only repository permissions, no

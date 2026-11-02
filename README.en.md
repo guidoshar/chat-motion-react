@@ -17,12 +17,39 @@ Add only the presentation you need.
 
 Small, themeable thinking-state animations and streamed text with a multicolor
 cursor. No UI framework, model SDK, remote runtime assets, telemetry or runtime
-dependency other than React.
+dependency other than React in the core entry. The optional Markdown entry uses
+`react-markdown` and `remark-gfm` peers.
 
 This is a **presentation library**: you own the transport, authentication,
 content and public progress stages. Design tokens are colors/sizes, not API keys.
 
 ## Component showroom
+
+### v0.3 · Composable chat experience
+
+`TransitionOrb`, `ThinkingIndicator`, `ActivityPanel` and `ChatResponse` compose
+waiting, public stages, streaming replies and completion disclosure. Use them
+together or independently. `createMotionTokens('#486b88')` coordinates the orb,
+cursor, label highlight and panel palette. Charts are optional React slots;
+Markdown is a separate optional entry.
+
+```tsx
+import { ChatResponse, MotionTheme, createMotionTokens } from '@guidoshar/chat-motion-react';
+import '@guidoshar/chat-motion-react/styles.css';
+
+<MotionTheme tokens={createMotionTokens('#486b88')}>
+  <ChatResponse text={replyText} phase={done ? 'complete' : 'streaming'} />
+</MotionTheme>
+```
+
+See the [integration guide and token table](docs/chat-experience.md) and
+[minimal example](examples/ChatExperience.tsx). This branch is v0.3 development;
+the v0.2.1 release linked below does not contain the new exports. Run the current
+branch locally at `http://127.0.0.1:5188/#experience`, or build and `npm pack` it.
+
+![Composable chat: collapsed public stages, Markdown reply and optional chart; synthetic data](docs/media/chat-experience.png)
+
+Standalone responsive preview: `http://127.0.0.1:5188/?view=chat`.
 
 Run the local desktop showroom at **http://127.0.0.1:5188**. There is no hosted
 public demo: the repository includes a live gallery, a token playground with
@@ -85,7 +112,8 @@ npm install "git+https://github.com/guidoshar/chat-motion-react.git#v0.2.1"
 
 ESM only. React 18.2 or 19 is a peer dependency. Package tooling requires Node
 20.19+; use an actively supported Node.js release such as 22.12+ or 24+.
-The declared React range is not a completed compatibility test matrix.
+CI exercises React 18.3.1 and 19.2.0; other versions in the declared peer range
+still require host validation.
 
 ## Quick start
 
@@ -231,7 +259,8 @@ Display only public progress summaries, not private model reasoning.
 - Decorative by default; supply an orb label when used alone. Announce public
   status once. Stream text deliberately has no character-by-character live
   region; use a single completion announcement in the host.
-- React text nodes only; no HTML or Markdown rendering.
+- The core uses React text nodes. The optional `/markdown` entry supports GFM
+  with raw HTML disabled and remote images blocked by default.
 - SSR render does not read window/document; client directives are preserved.
   In Next.js, import components from a client boundary and CSS in the root
   layout. This repository has not verified a Next.js integration.
