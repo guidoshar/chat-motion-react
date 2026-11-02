@@ -4,7 +4,7 @@
   <p><strong>Thinking orbs & streaming text, built to fit your brand.</strong></p>
   <p>五种思考动效 · 流式文字与品牌色光标 · 可组合的进展反馈</p>
   <p><code>React + TypeScript</code> · <code>Canvas 2D + CSS</code> · <code>MIT</code> · <code>无遥测</code></p>
-  <p><a href="#组件展厅">看效果</a> · <a href="#业务中的用法">看场景</a> · <a href="#在其他-react-项目安装">开始接入</a> · <a href="README.en.md">English</a></p>
+  <p><a href="https://myvalley.cn/tools/chat-motion/">在线展厅</a> · <a href="#组件展厅">看效果</a> · <a href="#业务中的用法">看场景</a> · <a href="#在其他-react-项目安装">开始接入</a> · <a href="README.en.md">English</a></p>
 </div>
 
 [![Build and package](https://github.com/guidoshar/chat-motion-react/actions/workflows/build.yml/badge.svg)](https://github.com/guidoshar/chat-motion-react/actions/workflows/build.yml)
@@ -38,12 +38,13 @@ import '@guidoshar/chat-motion-react/styles.css';
 
 查看 [完整接入指南与 token 表](docs/chat-experience.md) 和
 [最小聊天示例](examples/ChatExperience.tsx)。`main` 包含 v0.3 组件库和完整演示源码；
-下方 v0.2.1 是历史 Release，不包含新增组件。体验新版请本地运行 `main` 的
-`npm run dev`，进入 `http://127.0.0.1:5188/#experience`；安装可用 `npm pack` 生成本地包。
+下方 v0.2.1 是历史 Release，不包含新增组件。在线体验新版请打开
+[通用聊天体验](https://myvalley.cn/tools/chat-motion/#experience)。本地运行 `main` 的
+`npm run dev` 时，对应地址是 `http://127.0.0.1:5188/#experience`；安装可用 `npm pack` 生成本地包。
 
 ![通用聊天组件：阶段收拢、Markdown 正文和可选图表，全部为合成示例](docs/media/chat-experience.png)
 
-独立聊天预览：`http://127.0.0.1:5188/?view=chat`，可在窄屏查看。
+独立聊天预览：<https://myvalley.cn/tools/chat-motion/?view=chat>，可在窄屏查看。本地对应地址是 `http://127.0.0.1:5188/?view=chat`。
 
 ### 演示源码与自行部署
 
@@ -69,7 +70,7 @@ npm run preview:demo   # 在 http://127.0.0.1:5189 检查生产构建
 构建产物不提交 Git，可从源码重建；npm 组件包与演示站点分别构建。
 具体步骤见 [ECS 自行部署说明](docs/self-hosting.md)。
 
-仓库内置完整的桌面展示页，启动后访问 **http://127.0.0.1:5188**。不是静态效果图：五种 Orb 都在运行，可切换主题、调整参数并体验示例流程。没有公开托管的在线 Demo。
+在线展厅：**https://myvalley.cn/tools/chat-motion/** 。不是静态效果图：五种 Orb 都在运行，可切换主题、调整参数并体验示例流程。本地启动后，同一页面在 `http://127.0.0.1:5188`。
 
 | 展区 | 可以做什么 |
 | --- | --- |

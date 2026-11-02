@@ -3,7 +3,7 @@
   <h1>Make waiting feel like progress.</h1>
   <p><strong>Thinking orbs & streaming text, built to fit your brand.</strong></p>
   <p><code>React + TypeScript</code> · <code>Canvas 2D + CSS</code> · <code>MIT</code> · <code>No telemetry</code></p>
-  <p><a href="#component-showroom">Explore</a> · <a href="#business-context">Use cases</a> · <a href="#install">Get started</a> · <a href="README.md">中文文档</a></p>
+  <p><a href="https://myvalley.cn/tools/chat-motion/">Live showroom</a> · <a href="#component-showroom">Explore</a> · <a href="#business-context">Use cases</a> · <a href="#install">Get started</a> · <a href="README.md">中文文档</a></p>
 </div>
 
 [![Build and package](https://github.com/guidoshar/chat-motion-react/actions/workflows/build.yml/badge.svg)](https://github.com/guidoshar/chat-motion-react/actions/workflows/build.yml)
@@ -45,12 +45,15 @@ import '@guidoshar/chat-motion-react/styles.css';
 See the [integration guide and token table](docs/chat-experience.md) and
 [minimal example](examples/ChatExperience.tsx). `main` contains the v0.3 library
 and complete demo source. The historical v0.2.1 release linked below does not
-contain the new exports. Run `main` locally at
-`http://127.0.0.1:5188/#experience`, or build and `npm pack` it.
+contain the new exports. See the new components in the
+[live chat experience](https://myvalley.cn/tools/chat-motion/#experience).
+Running `main` locally opens the same section at `http://127.0.0.1:5188/#experience`;
+`npm pack` still builds a local package.
 
 ![Composable chat: collapsed public stages, Markdown reply and optional chart; synthetic data](docs/media/chat-experience.png)
 
-Standalone responsive preview: `http://127.0.0.1:5188/?view=chat`.
+Standalone responsive preview: <https://myvalley.cn/tools/chat-motion/?view=chat>.
+Locally that view is `http://127.0.0.1:5188/?view=chat`.
 
 ### Demo source and self-hosting
 
@@ -77,9 +80,10 @@ Serve the contents of `demo-dist/` with Nginx. `/` opens the full showroom;
 database or API keys. Generated builds stay out of Git; the library package and
 the demo site have separate outputs. See the [ECS self-hosting guide](docs/self-hosting.md).
 
-Run the local desktop showroom at **http://127.0.0.1:5188**. There is no hosted
-public demo: the repository includes a live gallery, a token playground with
-copyable React code, and three clearly labeled business simulations.
+The hosted showroom is **https://myvalley.cn/tools/chat-motion/** . It is a live
+gallery, not a screenshot: five orbs, a token playground with copyable React
+code, and three clearly labeled business simulations. The same page runs locally
+at `http://127.0.0.1:5188`.
 
 | Explore | What you can do |
 | --- | --- |
